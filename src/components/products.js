@@ -1,21 +1,21 @@
 import React from "react";
 
-function Services({ services }) {
-  if (!services || !Array.isArray(services)) {
-    return <p>No services available.</p>;
+function Products({ products }) {
+  if (!products || !Array.isArray(products)) {
+    return <p>No products available.</p>;
   }
 
   return (
     <ul>
-      {services.map((service) => (
-        <li key={service._id}>
-          <h3>{service.name}</h3>
-          <p>{service.time}</p>
-          <p>{service.price}</p>
+      {products.map((product) => (
+        <li key={product._id}>
+          <h3>{product.title}</h3>
+          <p>{product.price}</p>
+          <p>{product.description}</p>
         </li>
       ))}
     </ul>
   );
 }
 
-export default Services;
+export default Products;

@@ -1,21 +1,20 @@
 import React from "react";
 
-function Services({ posts }) {
+function Posts({ posts }) {
   if (!posts || !Array.isArray(posts)) {
-    return <p>No services available.</p>;
+    return <p>No posts available.</p>;
   }
 
   return (
     <ul>
-      {posts.map((service) => (
-        <li key={service._id}>
-          <h3>{service.name}</h3>
-          <p>{service.time}</p>
-          <p>{service.price}</p>
+      {posts.map((post) => (
+        <li key={post._id}>
+          <h3>{post.title}</h3>
+          <p>{post.content}</p>
         </li>
       ))}
     </ul>
   );
 }
 
-export default Services;
+export default Posts;
