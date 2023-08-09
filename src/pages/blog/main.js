@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import Posts from '../../components/posts';
+import Posts from '../../components/posts/posts';
 
 function App() {
 //   const [posts, setPosts] = useState([]);
