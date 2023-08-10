@@ -45,7 +45,7 @@ class Posts extends Component {
     return (
       <div>
         {this.state.posts.map((post) => (
-          <Post key={post._id} title={post.title} content={post.content} />
+          <Post key={post._id} title={post.title} content={post.content.substring(0, 300) + (post.content.length > 300 ? '...' : '')} />
         ))}
       </div>
     );
