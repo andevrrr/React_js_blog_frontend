@@ -1,22 +1,58 @@
-import React, { useState, useEffect } from 'react';
+import React, { Component } from 'react';
 
-import Services from '../../components/services/services';
+import Service from '../../components/services/service';
 
-function App() {
-  const [services, setServices] = useState([]);
+class Services extends Component {
+  state = {
+    isEditing: false,
+    services: [],
+    totalServices: 0,
+    editService: null,
+    status: "",
+    servicePage: 1,
+    servicesLoading: true,
+    editLoading: false,
+  };
 
-  useEffect(() => {
-    fetch('http://localhost:3000/services') // Replace this URL with the actual backend URL
-      .then(response => response.json())
-      .then(data => setServices(data))
-      .catch(error => console.error('Error fetching posts:', error));
-  }, []);
+  componentDidMount(){
+    this.loadServices();
+  }
 
-  return (
-    <div className="App">
-      <Services services={services} />
-    </div>
-  );
+  loadServices = () => {
+    fetch("http://localhost:3000/services")
+    .then(response => {
+      if (response.status !== 200) {
+        throw new Error("Faild to fetch services")
+      }
+
+      return response.json();
+    })
+    .then(resData => {
+      this.setState({
+        services: resData.services.map(service => ({
+          ...service
+        })),
+        totalServices: resData.totalItems,
+        servicesLoading: false
+      })
+    })
+    .catch(this.catchError);
+  }
+
+  catchError = (error) => {
+    this.setState({error: error})
+  }
+
+  render() {
+    return (
+      <div>
+        {this.state.services.map(service => (
+          <Service key={service._id} name={service.name} price={service.price} />
+        ))}
+      </div>
+    )
+  }
+
 }
 
-export default App;
+export default Services;

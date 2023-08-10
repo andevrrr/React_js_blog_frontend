@@ -1,22 +1,55 @@
-import React, { useState, useEffect } from 'react';
+import React, { Component } from "react";
+import Post from "../../components/posts/post";
 
-import Posts from '../../components/posts/posts';
+class Posts extends Component {
+  state = {
+    isEditing: false,
+    posts: [],
+    totalPosts: 0,
+    editPost: null,
+    status: "",
+    postPage: 1,
+    postsLoading: true,
+    editLoading: false,
+  };
 
-function App() {
-  const [posts, setPosts] = useState([]);
+  componentDidMount() {
+    this.loadPosts();
+  }
 
-  useEffect(() => {
-    fetch('http://localhost:3000/posts') // Replace this URL with the actual backend URL
-      .then(response => response.json())
-      .then(data => setPosts(data))
-      .catch(error => console.error('Error fetching posts:', error));
-  }, []);
+  loadPosts = () => {
+    fetch("http://localhost:3000/posts")
+      .then((response) => {
+        if (response.status !== 200) {
+          throw new Error("Failed to fetch posts");
+        }
+        return response.json(); // Return the parsed JSON data
+      })
+      .then((resData) => {
+        this.setState({
+          posts: resData.posts.map((post) => ({
+            ...post,
+          })),
+          totalPosts: resData.totalItems,
+          postsLoading: false,
+        });
+      })
+      .catch(this.catchError);
+  };
 
-  return (
-    <div className="App">
-      <Posts posts={posts} />
-    </div>
-  );
+  catchError = (error) => {
+    this.setState({ error: error });
+  };
+
+  render() {
+    return (
+      <div>
+        {this.state.posts.map((post) => (
+          <Post key={post._id} title={post.title} content={post.content} />
+        ))}
+      </div>
+    );
+  }
 }
 
-export default App;
+export default Posts;
