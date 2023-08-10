@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Post from "../../components/posts/post";
+//import axios from "axios";
 
 class Posts extends Component {
   state = {
@@ -11,11 +12,24 @@ class Posts extends Component {
     postPage: 1,
     postsLoading: true,
     editLoading: false,
+    csrfToken: "",
   };
 
   componentDidMount() {
     this.loadPosts();
+    // this.fetchCsrfToken();
   }
+
+  // fetchCsrfToken = () => {
+  //   axios
+  //     .get("http://localhost:3000/get-csrf-token")
+  //     .then((response) => {
+  //       this.setState({ csrfToken: response.data.csrfToken });
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching CSRF token", error);
+  //     });
+  // };
 
   loadPosts = () => {
     fetch("http://localhost:3000/posts")
@@ -46,28 +60,33 @@ class Posts extends Component {
   };
 
   deletePostHandler = (postId) => {
+    console.log("Sending CSRF Token:", this.state.csrfToken);
+    console.log(postId);
     this.setState({ postsLoading: true });
-    fetch('http://localhost:3000/admin/delete-product/' + postId, {
-      method: 'DELETE'
+    fetch("http://localhost:3000/admin/delete-post/" + postId, {
+      method: "POST",
+      // headers: {
+      //   'X-CSRF-Token': this.state.csrfToken
+      // }
     })
-    .then(res => {
-      if(res.status !== 200 && res.status !== 201) {
-        throw new Error('Deleting a post failed');
-      }
-      return res.json();
-    })
-    .then(resData => {
-      console.log(resData);
-      this.loadPosts();
-      this.setState(prevState => {
-        const updatedPosts = prevState.posts.filter(p => p._id !== postId);
-        return { posts: updatedPosts, postsLoading: false };
+      .then((res) => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error("Deleting a post failed");
+        }
+        return res.json();
       })
-    })
-    .catch(err => {
-      console.log(err);
-      this.setState({ postsLoading: false});
-    })
+      .then((resData) => {
+        console.log(resData);
+        this.loadPosts();
+        this.setState((prevState) => {
+          const updatedPosts = prevState.posts.filter((p) => p._id !== postId);
+          return { posts: updatedPosts, postsLoading: false };
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        this.setState({ postsLoading: false });
+      });
   };
 
   render() {
