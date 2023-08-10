@@ -46,7 +46,7 @@ class Products extends Component {
     return (
         <div>
             {this.state.products.map((product) => (
-                <Product key={product._id} title={product.title} description={product.description} price={product.price} inStock={product.inStock} />
+                <Product key={product._id} title={product.title} description={product.description} price={product.price} inStock={product.inStock} image={product.image} />
             ))}
         </div>
     );

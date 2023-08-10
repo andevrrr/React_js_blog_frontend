@@ -6,7 +6,7 @@ const Product = (props) => (
       <h1>{props.title}</h1>
     </div>
     {/* <div className="product_item_image">
-      <img src={`/${props.image}`} alt="" />
+      <img src={`/Users/anton/Desktop/node/NodeJs_blog/images/${props.image}`} alt="" />
     </div> */}
     <div className="product_item_info">
       <h2>{props.price}$</h2>
