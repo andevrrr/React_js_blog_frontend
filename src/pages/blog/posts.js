@@ -56,7 +56,14 @@ class Posts extends Component {
   };
 
   onStartEditPostHandler = (postId) => {
-    // Handle edit functionality
+    this.setState(prevState => {
+      const loadedPost = { ...prevState.posts.find(p => p._id === postId) };
+
+      return {
+        isEditing: true,
+        editPost: loadedPost
+      }
+    })
   };
 
   deletePostHandler = (postId) => {
