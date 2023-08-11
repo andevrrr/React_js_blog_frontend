@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Post from "../../components/posts/post";
 //import axios from "axios";
 
+import PostEdit from '../../components/posts/postEdit';
+
 class Posts extends Component {
   state = {
     isEditing: false,
@@ -99,6 +101,13 @@ class Posts extends Component {
   render() {
     return (
       <div>
+        <FeedEdit
+          editing={this.state.isEditing}
+          selectedPost={this.state.editPost}
+          loading={this.state.editLoading}
+          onCancelEdit={this.cancelEditHandler}
+          onFinishEdit={this.finishEditHandler}
+        />
         {this.state.posts.map((post) => (
           <Post
             key={post._id}
