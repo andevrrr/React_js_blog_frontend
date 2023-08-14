@@ -79,11 +79,11 @@ class Posts extends Component {
     const formData = new FormData();
     formData.append("title", postData.title);
     formData.append("content", postData.content);
-    let url = "http://localhost:3000/add-post";
+    let url = "http://localhost:3000/admin/add-post";
     let method = "POST";
     if (this.state.editPost) {
-      url = "http://localhost:3000/edit-post/" + this.state.editPost._id;
-      method = "PUT";
+      url = "http://localhost:3000/admin/edit-post/" + this.state.editPost._id;
+      method = "POST";
     }
 
     fetch(url, {

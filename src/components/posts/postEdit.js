@@ -27,7 +27,7 @@ class PostEdit extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (
-      this.props.edititng &&
+      this.props.editing &&
       prevProps.editing !== this.props.editing &&
       prevProps.selectedPost !== this.props.selectedPost
     ) {
@@ -127,7 +127,7 @@ class PostEdit extends Component {
               onBlur={this.inputBlurHandler.bind(this, "title")}
               valid={this.state.postForm["title"].valid}
               touched={this.state.postForm["title"].touched}
-              value={this.state.postForm["title"].value} // Make sure this is set
+              value={this.state.postForm["title"].value}
             />
             <Input
               id="content"
