@@ -58,6 +58,7 @@ class PostEdit extends Component {
         [input]: {
           ...prevState.postForm[input],
           valid: isValid,
+          value: value
         },
       };
 
