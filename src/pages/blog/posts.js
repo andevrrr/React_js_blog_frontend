@@ -3,6 +3,7 @@ import Post from "../../components/posts/post";
 //import axios from "axios";
 
 import PostEdit from "../../components/posts/postEdit";
+import Button from "../../components/Button/Button";
 
 class Posts extends Component {
   state = {
@@ -56,6 +57,10 @@ class Posts extends Component {
   catchError = (error) => {
     this.setState({ error: error });
   };
+
+  newPostHandler = () => {
+    this.setState({ isEditing: true });
+  }
 
   onStartEditPostHandler = (postId) => {
     this.setState((prevState) => {
@@ -165,6 +170,9 @@ class Posts extends Component {
           onCancelEdit={this.cancelEditHandler}
           onFinishEdit={this.finishEditHandler}
         />
+        <Button mode="raised" design="accent" onClick={this.newPostHandler}>
+          New post
+        </Button>
         {this.state.posts.map((post) => (
           <Post
             key={post._id}
