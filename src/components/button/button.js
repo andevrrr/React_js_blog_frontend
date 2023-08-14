@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import "./button.css";
+import "./Button.css";
 
 const button = (props) =>
   !props.link ? (

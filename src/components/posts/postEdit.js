@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from "react";
 
 import Backdrop from "../Backdrop/Backdrop";
-import Modal from '../Modal/Modal';
-import Input from '../Input/Input';
+import Modal from "../Modal/Modal";
+import Input from "../Input/Input";
 
 const POST_FORM = {
   title: {
@@ -19,7 +19,7 @@ const POST_FORM = {
   },
 };
 
-class FeedEdit extends Component {
+class PostEdit extends Component {
   state = {
     postForm: POST_FORM,
     formIsValid: false,
@@ -109,39 +109,41 @@ class FeedEdit extends Component {
   render() {
     return this.props.editing ? (
       <Fragment>
-      <Backdrop onClick={this.cancelPostChangeHandler} />
-      <Modal
-        title="New Post"
-        acceptEnabled={this.state.formIsValid}
-        onCancelModal={this.cancelPostChangeHandler}
-        onAcceptModal={this.acceptPostChangeHandler}
-        isLoading={this.props.loading}
-      >
-        <form>
-          <Input
-            id="title"
-            label="Title"
-            control="input"
-            onChange={this.postInputChangeHandler}
-            onBlur={this.inputBlurHandler.bind(this, 'title')}
-            valid={this.state.postForm['title'].valid}
-            touched={this.state.postForm['title'].touched}
-            value={this.state.postForm['title'].value}
-          />
-          <Input
-            id="content"
-            label="Content"
-            control="textarea"
-            rows="5"
-            onChange={this.postInputChangeHandler}
-            onBlur={this.inputBlurHandler.bind(this, 'content')}
-            valid={this.state.postForm['content'].valid}
-            touched={this.state.postForm['content'].touched}
-            value={this.state.postForm['content'].value}
-          />
-        </form>
-      </Modal>
-    </Fragment>
+        <Backdrop onClick={this.cancelPostChangeHandler} />
+        <Modal
+          title="New Post"
+          acceptEnabled={this.state.formIsValid}
+          onCancelModal={this.cancelPostChangeHandler}
+          onAcceptModal={this.acceptPostChangeHandler}
+          isLoading={this.props.loading}
+        >
+          <form>
+            <Input
+              id="title"
+              label="Title"
+              control="input"
+              onChange={this.postInputChangeHandler}
+              onBlur={this.inputBlurHandler.bind(this, "title")}
+              valid={this.state.postForm["title"].valid}
+              touched={this.state.postForm["title"].touched}
+              value={this.state.postForm["title"].value} // Make sure this is set
+            />
+            <Input
+              id="content"
+              label="Content"
+              control="textarea"
+              rows="5"
+              onChange={this.postInputChangeHandler}
+              onBlur={this.inputBlurHandler.bind(this, "content")}
+              valid={this.state.postForm["content"].valid}
+              touched={this.state.postForm["content"].touched}
+              value={this.state.postForm["content"].value}
+            />
+          </form>
+        </Modal>
+      </Fragment>
     ) : null;
   }
 }
+
+export default PostEdit;

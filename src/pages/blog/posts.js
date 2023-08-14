@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Post from "../../components/posts/post";
 //import axios from "axios";
 
-import PostEdit from '../../components/posts/postEdit';
+import PostEdit from "../../components/posts/postEdit";
 
 class Posts extends Component {
   state = {
@@ -58,14 +58,71 @@ class Posts extends Component {
   };
 
   onStartEditPostHandler = (postId) => {
-    this.setState(prevState => {
-      const loadedPost = { ...prevState.posts.find(p => p._id === postId) };
+    this.setState((prevState) => {
+      const loadedPost = { ...prevState.posts.find((p) => p._id === postId) };
 
       return {
         isEditing: true,
-        editPost: loadedPost
-      }
+        editPost: loadedPost,
+      };
+    });
+  };
+
+  cancelEditHandler = () => {
+    this.setState({ isEditing: false, editPost: null });
+  };
+
+  finishEditHandler = (postData) => {
+    this.setState({
+      editLoading: true,
+    });
+    const formData = new FormData();
+    formData.append("title", postData.title);
+    formData.append("content", postData.content);
+    let url = "http://localhost:3000/add-post";
+    let method = "POST";
+    if (this.state.editPost) {
+      url = "http://localhost:3000/edit-post/" + this.state.editPost._id;
+      method = "PUT";
+    }
+
+    fetch(url, {
+      method: method,
+      body: formData,
+      // headers: {
+      //   Authorization: 'Bearer ' + this.props.token
+      // }
     })
+      .then((res) => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error("Creating or editing a post failed!");
+        }
+        return res.json();
+      })
+      .then((resData) => {
+        console.log(resData);
+        const post = {
+          _id: resData.post._id,
+          title: resData.post.title,
+          content: resData.post.content,
+        };
+        this.setState((prevState) => {
+          return {
+            isEditing: false,
+            editPost: null,
+            editLoading: false,
+          };
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        this.setState({
+          isEditing: false,
+          editPost: null,
+          editLoading: false,
+          error: err,
+        });
+      });
   };
 
   deletePostHandler = (postId) => {
@@ -101,7 +158,7 @@ class Posts extends Component {
   render() {
     return (
       <div>
-        <FeedEdit
+        <PostEdit
           editing={this.state.isEditing}
           selectedPost={this.state.editPost}
           loading={this.state.editLoading}
