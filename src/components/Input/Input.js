@@ -5,7 +5,7 @@ import './Input.css';
 const input = props => (
   <div className="input">
     {props.label && <label htmlFor={props.id}>{props.label}</label>}
-    {props.control === 'input' && (
+    {props.control === 'input' && props.type !== 'checkbox' && (
       <input
         className={[
           !props.valid ? 'invalid' : 'valid',
@@ -31,6 +31,16 @@ const input = props => (
         required={props.required}
         value={props.value}
         onChange={e => props.onChange(props.id, e.target.value)}
+        onBlur={props.onBlur}
+      />
+    )}
+    {props.control === 'input' && props.type === 'checkbox' && (
+      <input
+        type="checkbox"
+        id={props.id}
+        required={props.required}
+        checked={props.value} // Assuming your value for checkbox is boolean
+        onChange={e => props.onChange(props.id, e.target.checked)} // Handle checkbox change
         onBlur={props.onBlur}
       />
     )}

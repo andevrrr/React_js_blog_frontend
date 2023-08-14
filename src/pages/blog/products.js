@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 
 import Product from "../../components/products/product";
+import ProductEdit from "../../components/products/productEdit";
+import Button from "../../components/Button/Button";
 
 class Products extends Component {
   state = {
@@ -39,16 +41,143 @@ class Products extends Component {
   };
 
   catchError = (error) => {
-    this.setState({error: error});
+    this.setState({ error: error });
+  };
+
+  newProductHandler = () => {
+    this.setState({ isEditing: true });
   }
+
+  onStartEditProductHandler = (productId) => {
+    this.setState((prevState) => {
+      const loadedProduct = { ...prevState.products.find((p) => p._id === productId) };
+
+      return {
+        isEditing: true,
+        editProduct: loadedProduct,
+      };
+    });
+  };
+
+  cancelEditHandler = () => {
+    this.setState({ isEditing: false, editProduct: null });
+  };
+
+  finishEditHandler = (productData) => {
+    this.setState({
+      editLoading: true,
+    });
+    const formData = new FormData();
+    formData.append("title", productData.title);
+    formData.append("price", productData.price);
+    formData.append("description", productData.description);
+    formData.append("inStock", productData.inStock);
+    let url = "http://localhost:3000/admin/add-product";
+    let method = "POST";
+    if (this.state.editProduct) {
+      url = "http://localhost:3000/admin/edit-product/" + this.state.editProduct._id;
+      method = "POST";
+    }
+
+    fetch(url, {
+      method: method,
+      body: formData,
+      // headers: {
+      //   Authorization: 'Bearer ' + this.props.token
+      // }
+    })
+      .then((res) => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error("Creating or editing a post failed!");
+        }
+        return res.json();
+      })
+      .then((resData) => {
+        console.log(resData);
+        const product = {
+          _id: resData.product._id,
+          title: resData.product.title,
+          price: resData.product.price,
+          description: resData.product.description,
+          inStock: resData.product.inStock,
+        };
+        this.setState((prevState) => {
+          return {
+            isEditing: false,
+            editProduct: null,
+            editLoading: false,
+          };
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        this.setState({
+          isEditing: false,
+          editProduct: null,
+          editLoading: false,
+          error: err,
+        });
+      });
+  };
+
+  deleteProductHandler = (productId) => {
+    console.log("Sending CSRF Token:", this.state.csrfToken);
+    console.log(productId);
+    this.setState({ productsLoading: true });
+    fetch("http://localhost:3000/admin/delete-product/" + productId, {
+      method: "POST",
+      // headers: {
+      //   'X-CSRF-Token': this.state.csrfToken
+      // }
+    })
+      .then((res) => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error("Deleting a product failed");
+        }
+        return res.json();
+      })
+      .then((resData) => {
+        console.log(resData);
+        this.loadProducts();
+        this.setState((prevState) => {
+          const updatedProducts = prevState.products.filter((p) => p._id !== productId);
+          return { products: updatedProducts, productsLoading: false };
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        this.setState({ productsLoading: false });
+      });
+  };
 
   render() {
     return (
-        <div>
-            {this.state.products.map((product) => (
-                <Product key={product._id} title={product.title} description={product.description} price={product.price} inStock={product.inStock} image={product.image} />
-            ))}
-        </div>
+      <div>
+        <ProductEdit
+          editing={this.state.isEditing}
+          selectedProduct={this.state.editProduct}
+          loading={this.state.editLoading}
+          onCancelEdit={this.cancelEditHandler}
+          onFinishEdit={this.finishEditHandler}
+        />
+        <Button mode="raised" design="accent" onClick={this.newProductHandler}>
+          New product
+        </Button>
+        {this.state.products.map((product) => (
+          <Product
+            id={product._id}
+            key={product._id}
+            title={product.title}
+            description={product.description}
+            price={product.price}
+            inStock={product.inStock}
+            image={product.image}
+            date={new Date(product.createdAt).toLocaleDateString("en-GB")}
+            onStartEdit={this.onStartEditProductHandler.bind(this, product._id)}
+            onDelete={this.deleteProductHandler.bind(this, product._id)}
+          />
+        ))}
+      </div>
     );
   }
 }

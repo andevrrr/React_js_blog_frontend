@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 
 import Service from "../../components/services/service";
+import ServiceEdit from "../../components/services/serviceEdit";
+import Button from "../../components/Button/Button";
 
 class Services extends Component {
   state = {
@@ -43,7 +45,7 @@ class Services extends Component {
     this.setState({ error: error });
   };
 
-  newPostHandler = () => {
+  newServiceHandler = () => {
     this.setState({ isEditing: true });
   };
 
@@ -150,6 +152,16 @@ class Services extends Component {
   render() {
     return (
       <div>
+        <ServiceEdit
+          editing={this.state.isEditing}
+          selectedService={this.state.editService}
+          loading={this.state.editLoading}
+          onCancelEdit={this.cancelEditHandler}
+          onFinishEdit={this.finishEditHandler}
+        />
+        <Button mode="raised" design="accent" onClick={this.newServiceHandler}>
+          New service
+        </Button>
         {this.state.services.map((service) => (
           <Service
             key={service._id}

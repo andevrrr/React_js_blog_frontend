@@ -1,5 +1,7 @@
 import React from "react";
 
+import Button from '../Button/Button';
+
 const Product = (props) => (
   <article>
     <div className="product_item_header">
@@ -13,6 +15,11 @@ const Product = (props) => (
       <p>{props.description}</p>
       {props.inStock ? <p>In stock</p> : <p>Out of stock</p>}
     </div>
+    <div>
+            <Button link={props.id}>View more</Button>
+            <Button onClick={props.onStartEdit}>Edit</Button>
+            <Button onClick={props.onDelete}>Delete</Button>
+        </div>
   </article>
 );
 
