@@ -3,6 +3,9 @@ import React, { Component, Fragment } from "react";
 import Backdrop from "../Backdrop/Backdrop";
 import Modal from "../Modal/Modal";
 import Input from "../Input/Input";
+import FilePicker from "../Input/FilePicker";
+import Image from "../Image/Image";
+import { generateBase64FromImage } from "../../util/image";
 
 const PRODUCT_FORM = {
   title: {
@@ -10,6 +13,12 @@ const PRODUCT_FORM = {
     valid: false,
     touched: false,
     // validators: [required, length({ min: 5 })],
+  },
+  image: {
+    value: "",
+    valid: false,
+    touched: false,
+    // validators: [required]
   },
   price: {
     value: "",
@@ -35,6 +44,7 @@ class ProductEdit extends Component {
   state = {
     productForm: PRODUCT_FORM,
     formIsValid: false,
+    imagePreview: null,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -47,6 +57,11 @@ class ProductEdit extends Component {
         title: {
           ...prevState.productForm.title,
           value: this.props.selectedProduct.title,
+          valid: true,
+        },
+        image: {
+          ...prevState.productForm.image,
+          value: this.props.selectedProduct.imagePath,
           valid: true,
         },
         price: {
@@ -69,7 +84,16 @@ class ProductEdit extends Component {
     }
   }
 
-  productInputChangeHandler = (input, value) => {
+  productInputChangeHandler = (input, value, files) => {
+    if (files) {
+      generateBase64FromImage(files[0])
+        .then((b64) => {
+          this.setState({ imagePreview: b64 });
+        })
+        .catch((e) => {
+          this.setState({ imagePreview: null });
+        });
+    }
     this.setState((prevState) => {
       let isValid = true;
       //   for (const validator of prevState.productForm[input].validators) {
@@ -120,6 +144,7 @@ class ProductEdit extends Component {
   acceptProductChangeHandler = () => {
     const product = {
       title: this.state.productForm.title.value,
+      image: this.state.productForm.image.value,
       price: this.state.productForm.price.value,
       description: this.state.productForm.description.value,
       inStock: this.state.productForm.inStock.value,
@@ -128,6 +153,7 @@ class ProductEdit extends Component {
     this.setState({
       productForm: PRODUCT_FORM,
       formIsValid: false,
+      imagePreview: null,
     });
   };
 
@@ -143,6 +169,21 @@ class ProductEdit extends Component {
           isLoading={this.props.loading}
         >
           <form>
+            <FilePicker
+              id="image"
+              label="Image"
+              control="input"
+              onChange={this.productInputChangeHandler}
+              onBlur={this.inputBlurHandler.bind(this, "image")}
+              valid={this.state.productForm["image"].valid}
+              touched={this.state.productForm["image"].touched}
+            />
+            <div className="new-post__preview-image">
+              {!this.state.imagePreview && <p>Please choose an image.</p>}
+              {this.state.imagePreview && (
+                <Image imageUrl={this.state.imagePreview} contain left />
+              )}
+            </div>
             <Input
               id="title"
               label="Title"

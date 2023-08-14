@@ -1,11 +1,15 @@
 import React from "react";
 
 import Button from '../Button/Button';
+import Image from "../Image/Image";
 
 const Product = (props) => (
   <article>
     <div className="product_item_header">
       <h1>{props.title}</h1>
+    </div>
+    <div className="post__image">
+      <Image imageUrl={props.image} contain />
     </div>
     {/* <div className="product_item_image">
       <img src={`/Users/anton/Desktop/node/NodeJs_blog/images/${props.image}`} alt="" />
