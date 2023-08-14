@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
-import Product from "../../components/products/product";
-import ProductEdit from "../../components/products/productEdit";
+import Product from "../../components/Products/Product";
+import ProductEdit from "../../components/Products/ProductEdit";
 import Button from "../../components/Button/Button";
 
 class Products extends Component {
@@ -94,13 +94,13 @@ class Products extends Component {
       })
       .then((resData) => {
         console.log(resData);
-        const product = {
-          _id: resData.product._id,
-          title: resData.product.title,
-          price: resData.product.price,
-          description: resData.product.description,
-          inStock: resData.product.inStock,
-        };
+        // const product = {
+        //   _id: resData.product._id,
+        //   title: resData.product.title,
+        //   price: resData.product.price,
+        //   description: resData.product.description,
+        //   inStock: resData.product.inStock,
+        // };
         this.setState((prevState) => {
           return {
             isEditing: false,

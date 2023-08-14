@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
-import Service from "../../components/services/service";
-import ServiceEdit from "../../components/services/serviceEdit";
+import Service from "../../components/Services/Service";
+import ServiceEdit from "../../components/Services/ServiceEdit";
 import Button from "../../components/Button/Button";
 
 class Services extends Component {
@@ -94,12 +94,12 @@ class Services extends Component {
       })
       .then((resData) => {
         console.log(resData);
-        const service = {
-          _id: resData.service._id,
-          name: resData.service.name,
-          time: resData.service.time,
-          price: resData.service.price,
-        };
+        // const service = {
+        //   _id: resData.service._id,
+        //   name: resData.service.name,
+        //   time: resData.service.time,
+        //   price: resData.service.price,
+        // };
         this.setState((prevState) => {
           return {
             isEditing: false,

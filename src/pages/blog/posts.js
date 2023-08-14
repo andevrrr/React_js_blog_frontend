@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import Post from "../../components/posts/post";
+import Post from "../../components/Posts/Post";
 //import axios from "axios";
 
-import PostEdit from "../../components/posts/postEdit";
+import PostEdit from "../../components/Posts/PostEdit";
 import Button from "../../components/Button/Button";
 
 class Posts extends Component {
@@ -106,11 +106,11 @@ class Posts extends Component {
       })
       .then((resData) => {
         console.log(resData);
-        const post = {
-          _id: resData.post._id,
-          title: resData.post.title,
-          content: resData.post.content,
-        };
+        // const post = {
+        //   _id: resData.post._id,
+        //   title: resData.post.title,
+        //   content: resData.post.content,
+        // };
         this.setState((prevState) => {
           return {
             isEditing: false,

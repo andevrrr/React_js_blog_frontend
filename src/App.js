@@ -1,11 +1,11 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Services from "./pages/blog/services";
-import Products from "./pages/blog/products";
-import Posts from "./pages/blog/posts";
-import Header from "./pages/blog/header/header";
-import Main from "./pages/blog/main";
-import SinglePost from "./pages/blog/SinglePost/SinglePost";
+import Services from "./pages/Blog/Services";
+import Products from "./pages/Blog/Products";
+import Posts from "./pages/Blog/Posts";
+import Header from "./pages/Blog/Header/Header";
+import Main from "./pages/Blog/Main";
+import SinglePost from "./pages/Blog/SinglePost/SinglePost";
 
 import "./App.css";
 
