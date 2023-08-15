@@ -11,9 +11,6 @@ const Product = (props) => (
     <div className="post__image">
       <Image imageUrl={props.image} contain />
     </div>
-    {/* <div className="product_item_image">
-      <img src={`/Users/anton/Desktop/node/NodeJs_blog/images/${props.image}`} alt="" />
-    </div> */}
     <div className="product_item_info">
       <h2>{props.price}$</h2>
       <p>{props.description}</p>
