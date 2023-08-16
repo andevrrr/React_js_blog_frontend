@@ -32,7 +32,7 @@ class Products extends Component {
         this.setState({
           products: resData.products.map((product) => ({
             ...product,
-            imagePath: product.imageUrl
+            imagePath: product.image
           })),
           totalProducts: resData.totalItems,
           productsLoading: false,
@@ -69,6 +69,7 @@ class Products extends Component {
       editLoading: true,
     });
     const formData = new FormData();
+    console.log(productData.image);
     formData.append("title", productData.title);
     formData.append('image', productData.image);
     formData.append("price", productData.price);

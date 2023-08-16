@@ -1,13 +1,15 @@
 .modal {
-    position: fixed;
-    width: 90%;
-    left: 5%;
-    top: 20vh;
-    background: white;
-    border-radius: 5px;
-    z-index: 200;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  }
+  position: fixed;
+  width: 90%;
+  max-height: 80vh; /* Set a maximum height to trigger scrolling */
+  overflow-y: auto; /* Enable vertical scrolling when content exceeds max height */
+  left: 5%;
+  top: 20vh;
+  background: white;
+  border-radius: 5px;
+  z-index: 200;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+}
   
   .modal__header {
     border-bottom: 2px solid #3b0062;

@@ -137,3 +137,7 @@ button.btn:hover {
 main h1, main a {
     justify-content: center;
 }
+
+.post__image img{
+    width: 300px;
+}

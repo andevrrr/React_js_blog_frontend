@@ -33,7 +33,7 @@ const PRODUCT_FORM = {
     // validators: [required, length({ min: 5 })],
   },
   inStock: {
-    value: true,
+    value: false,
     valid: false,
     touched: false,
     // validators: [required, length({ min: 5 })],
@@ -104,7 +104,7 @@ class ProductEdit extends Component {
         [input]: {
           ...prevState.productForm[input],
           valid: isValid,
-          value: value,
+          value: files ? files[0] : value,
         },
       };
 
@@ -181,7 +181,8 @@ class ProductEdit extends Component {
             <div className="new-post__preview-image">
               {!this.state.imagePreview && <p>Please choose an image.</p>}
               {this.state.imagePreview && (
-                <Image imageUrl={this.state.imagePreview} contain left />
+                // <Image image={this.state.imagePreview} contain left />
+                <img style={{ width: '100px' }} src={this.state.imagePreview} alt="Image" />
               )}
             </div>
             <Input

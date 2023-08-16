@@ -2,6 +2,7 @@ import React from "react";
 
 import Button from '../Button/Button';
 import Image from "../Image/Image";
+import './Products.css';
 
 const Product = (props) => (
   <article>
@@ -9,7 +10,8 @@ const Product = (props) => (
       <h1>{props.title}</h1>
     </div>
     <div className="post__image">
-      <Image imageUrl={props.image} contain />
+      <img src={`http://localhost:3000/${props.image}`} alt="Image" />
+      {/* <Image image={props.image} contain /> */}
     </div>
     <div className="product_item_info">
       <h2>{props.price}$</h2>
