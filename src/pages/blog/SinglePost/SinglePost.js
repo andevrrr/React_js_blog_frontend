@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
+
 const SinglePost = () => {
   const { postId } = useParams(); // Access the postId parameter
 
