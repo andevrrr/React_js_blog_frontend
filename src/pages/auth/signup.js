@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-function App() {
+function SignUp() {
   const history = useNavigate();
 
   //const [name, setName] = useState('')
@@ -75,4 +75,4 @@ function App() {
   );
 }
 
-export default App;
+export default SignUp;
