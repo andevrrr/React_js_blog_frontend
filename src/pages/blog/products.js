@@ -170,6 +170,8 @@ class Products extends Component {
           <Product
             id={product._id}
             key={product._id}
+            isVisible={product.isVisible}
+            isFeatured={product.isFeatured}
             title={product.title}
             description={product.description}
             price={product.price}

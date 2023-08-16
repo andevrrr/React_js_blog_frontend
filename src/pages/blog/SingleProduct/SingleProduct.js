@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import CommentForm from "../../../components/comments/comments";
-import StatusToggle from "../../../components/Status/status";
 
 const SingleProduct = () => {
   const { productId } = useParams();
@@ -76,20 +75,6 @@ const SingleProduct = () => {
         Description: <br /> {product.description}
       </p>
       <p>{product.inStock}</p>
-      <div>
-        <StatusToggle
-          model="products"
-          field="isVisible"
-          itemId={productId}
-          initialStatus={product.isVisible}
-        />
-        <StatusToggle
-          model="products"
-          field="isFeatured"
-          itemId={productId}
-          initialStatus={product.isFeatured}
-        />
-      </div>
       <h2>Comments:</h2>
       {product.comments && product.comments.length > 0 ? (
         product.comments.map((comment, index) => (

@@ -177,6 +177,8 @@ class Posts extends Component {
           <Post
             key={post._id}
             id={post._id}
+            isVisible={post.isVisible}
+            isFeatured={post.isFeatured}
             title={post.title}
             content={
               post.content.substring(0, 300) +

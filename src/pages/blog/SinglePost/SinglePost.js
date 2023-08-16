@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import CommentForm from "../../../components/comments/comments";
-import StatusToggle from "../../../components/Status/status";
 
 const SinglePost = () => {
   const { postId } = useParams(); // Access the postId parameter
@@ -64,20 +63,6 @@ const SinglePost = () => {
       <h1>{post.title}</h1>
       <h2>Created on {post.date}</h2>
       <p>{post.content}</p>
-      <div>
-        <StatusToggle
-          model="posts"
-          field="isVisible"
-          itemId={postId}
-          initialStatus={post.isVisible}
-        />
-        <StatusToggle
-          model="posts"
-          field="isFeatured"
-          itemId={postId}
-          initialStatus={post.isFeatured}
-        />
-      </div>
       <h2>Comments:</h2>
       {post.comments && post.comments.length > 0 ? (
         post.comments.map((comment, index) => (

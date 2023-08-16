@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Button from '../Button/Button';
+import StatusToggle from '../Status/status';
 
 const Post = props => (
     <article>
@@ -11,6 +12,20 @@ const Post = props => (
             <Button onClick={props.onStartEdit}>Edit</Button>
             <Button onClick={props.onDelete}>Delete</Button>
         </div>
+        <div>
+        <StatusToggle
+          model="posts"
+          field="isVisible"
+          itemId={props.id}
+          initialStatus={props.isVisible}
+        />
+        <StatusToggle
+          model="posts"
+          field="isFeatured"
+          itemId={props.id}
+          initialStatus={props.isFeatured}
+        />
+      </div>
     </article>
 );
 

@@ -1,8 +1,10 @@
 import React from "react";
 
-import Button from '../Button/Button';
+import Button from "../Button/Button";
 import Image from "../Image/Image";
-import './Products.css';
+import "./Products.css";
+
+import StatusToggle from '../Status/status';
 
 const Product = (props) => (
   <article>
@@ -19,10 +21,24 @@ const Product = (props) => (
       {props.inStock ? <p>In stock</p> : <p>Out of stock</p>}
     </div>
     <div>
-            <Button link={props.id}>View more</Button>
-            <Button onClick={props.onStartEdit}>Edit</Button>
-            <Button onClick={props.onDelete}>Delete</Button>
-        </div>
+      <Button link={props.id}>View more</Button>
+      <Button onClick={props.onStartEdit}>Edit</Button>
+      <Button onClick={props.onDelete}>Delete</Button>
+    </div>
+    <div>
+        <StatusToggle
+          model="products"
+          field="isVisible"
+          itemId={props.id}
+          initialStatus={props.isVisible}
+        />
+        <StatusToggle
+          model="products"
+          field="isFeatured"
+          itemId={props.id}
+          initialStatus={props.isFeatured}
+        />
+      </div>
   </article>
 );
 
