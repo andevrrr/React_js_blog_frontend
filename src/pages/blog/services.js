@@ -166,6 +166,8 @@ class Services extends Component {
           <Service
             key={service._id}
             id={service._id}
+            isVisible={service.isVisible}
+            isFeatured={service.isFeatured}
             name={service.name}
             time={service.time}
             price={service.price}
