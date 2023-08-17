@@ -156,47 +156,70 @@ class App extends Component {
   };
 
   render() {
-    let routes = (
-      <BrowserRouter>
-        <Routes>
-        <Route
-          path="/"
-          element={(
-            <Login
-              onLogin={this.loginHandler}
-              loading={this.state.authLoading}
-            />
-          )}
-        />
-          <Route
-            path="/signup"
-            exact
-            element={(
-              <SignUp
-                onLogin={this.signupHandler}
-                loading={this.state.authLoading}
-              />
-            )}
-          />
-          <Route path="/" element={<Navigate to="/" />} />
-        </Routes>
-      </BrowserRouter>
-    );
+    let routes;
     if (this.state.isAuth) {
       routes = (
         <BrowserRouter>
-        <Routes>
-          <Route
-            path="/"
-            exact
-            element={(
-              <Main userId={this.state.userId} token={this.state.token} />
-            )}
-          />
-          <Route path="/" element={<Navigate to="/" />} />
-        </Routes>
-      </BrowserRouter>
-      )
+          <Routes>
+            <Route
+              path="/"
+              exact
+              element={
+                <Main userId={this.state.userId} token={this.state.token} />
+              }
+            />
+            <Route path="/" element={<Navigate to="/" />} />
+            <Route
+              path="/services"
+              element={
+                <Services userId={this.state.userId} token={this.state.token} />
+              }
+            />
+            <Route
+              path="/products"
+              element={
+                <Products userId={this.state.userId} token={this.state.token} />
+              }
+            />
+            <Route
+              path="/posts"
+              element={
+                <Posts userId={this.state.userId} token={this.state.token} />
+              }
+            />
+            <Route path="/posts/:postId" element={<SinglePost />} />
+            <Route path="/products/:productId" element={<SingleProduct />} />
+          </Routes>
+        </BrowserRouter>
+      );
+    } else {
+      routes = (
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path="/login"
+              element={
+                <Login
+                  onLogin={this.loginHandler}
+                  loading={this.state.authLoading}
+                />
+              }
+            />
+            <Route
+              path="/signup"
+              exact
+              element={
+                <SignUp
+                  onLogin={this.signupHandler}
+                  loading={this.state.authLoading}
+                />
+              }
+            />
+            <Route path="/services" element={<Services />} />
+            {/* <Route path="/" element={<Navigate to="/" />} /> */}
+          </Routes>
+        </BrowserRouter>
+      );
     }
     return (
       <>
@@ -208,11 +231,6 @@ class App extends Component {
             <Route path="/" element={<Main />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/posts" element={<Posts />} />
-            <Route path="/posts/:postId" element={<SinglePost />} />
-            <Route path="/products/:productId" element={<SingleProduct />} />
           </Routes>
         </BrowserRouter> */}
       </>

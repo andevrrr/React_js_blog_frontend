@@ -14,11 +14,28 @@ class Services extends Component {
     servicePage: 1,
     servicesLoading: true,
     editLoading: false,
+    isAuth: false,
   };
 
   componentDidMount() {
     this.loadServices();
+    this.checkAuthStatus();
   }
+
+  checkAuthStatus = () => {
+    fetch("http://localhost:3000/check-auth-status", {
+      headers: {
+        Authorization: 'Bearer ' + this.props.token,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({ isAuth: data.isAuthenticated }); // Update isAuth state
+      })
+      .catch((error) => {
+        console.error("Error checking authentication status", error);
+      });
+  };
 
   loadServices = () => {
     fetch("http://localhost:3000/services")
@@ -51,7 +68,9 @@ class Services extends Component {
 
   onStartEditServiceHandler = (serviceId) => {
     this.setState((prevState) => {
-      const loadedService = { ...prevState.services.find((p) => p._id === serviceId) };
+      const loadedService = {
+        ...prevState.services.find((p) => p._id === serviceId),
+      };
 
       return {
         isEditing: true,
@@ -75,16 +94,15 @@ class Services extends Component {
     let url = "http://localhost:3000/admin/add-service";
     let method = "POST";
     if (this.state.editService) {
-      url = "http://localhost:3000/admin/edit-service/" + this.state.editService._id;
+      url =
+        "http://localhost:3000/admin/edit-service/" +
+        this.state.editService._id;
       method = "POST";
     }
 
     fetch(url, {
       method: method,
       body: formData,
-      // headers: {
-      //   Authorization: 'Bearer ' + this.props.token
-      // }
     })
       .then((res) => {
         if (res.status !== 200 && res.status !== 201) {
@@ -125,9 +143,6 @@ class Services extends Component {
     this.setState({ servicesLoading: true });
     fetch("http://localhost:3000/admin/delete-service/" + serviceId, {
       method: "POST",
-      // headers: {
-      //   'X-CSRF-Token': this.state.csrfToken
-      // }
     })
       .then((res) => {
         if (res.status !== 200 && res.status !== 201) {
@@ -139,7 +154,9 @@ class Services extends Component {
         console.log(resData);
         this.loadServices();
         this.setState((prevState) => {
-          const updatedServices = prevState.services.filter((p) => p._id !== serviceId);
+          const updatedServices = prevState.services.filter(
+            (p) => p._id !== serviceId
+          );
           return { services: updatedServices, servicesLoading: false };
         });
       })
@@ -152,16 +169,24 @@ class Services extends Component {
   render() {
     return (
       <div>
-        <ServiceEdit
-          editing={this.state.isEditing}
-          selectedService={this.state.editService}
-          loading={this.state.editLoading}
-          onCancelEdit={this.cancelEditHandler}
-          onFinishEdit={this.finishEditHandler}
-        />
-        <Button mode="raised" design="accent" onClick={this.newServiceHandler}>
-          New service
-        </Button>
+        {this.state.isAuth && (
+          <div>
+            <ServiceEdit
+              editing={this.state.isEditing}
+              selectedService={this.state.editService}
+              loading={this.state.editLoading}
+              onCancelEdit={this.cancelEditHandler}
+              onFinishEdit={this.finishEditHandler}
+            />
+            <Button
+              mode="raised"
+              design="accent"
+              onClick={this.newServiceHandler}
+            >
+              New service
+            </Button>
+          </div>
+        )}
         {this.state.services.map((service) => (
           <Service
             key={service._id}

@@ -21,7 +21,11 @@ class Products extends Component {
   }
 
   loadProducts = () => {
-    fetch("http://localhost:3000/products")
+    fetch("http://localhost:3000/products", {
+      headers: {
+        Authorization: 'Bearer ' + this.props.token,
+      },
+    })
       .then((response) => {
         if (response.status !== 200) {
           throw new Error("Failed to fetch products");
