@@ -15,17 +15,19 @@ class Services extends Component {
     servicesLoading: true,
     editLoading: false,
     isAuth: false,
+    token: this.props.token
   };
 
   componentDidMount() {
-    this.loadServices();
+    console.log("Token received in Services:", this.props.token);
     this.checkAuthStatus();
+    this.loadServices();
   }
 
   checkAuthStatus = () => {
     fetch("http://localhost:3000/check-auth-status", {
       headers: {
-        Authorization: 'Bearer ' + this.props.token,
+        Authorization: 'Bearer ' + this.state.token,
       },
     })
       .then((response) => response.json())
@@ -189,6 +191,7 @@ class Services extends Component {
         )}
         {this.state.services.map((service) => (
           <Service
+          isAuthenticated={this.state.isAuth}
             key={service._id}
             id={service._id}
             isVisible={service.isVisible}

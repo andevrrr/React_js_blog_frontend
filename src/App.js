@@ -215,7 +215,7 @@ class App extends Component {
                 />
               }
             />
-            <Route path="/services" element={<Services />} />
+            
             {/* <Route path="/" element={<Navigate to="/" />} /> */}
           </Routes>
         </BrowserRouter>
