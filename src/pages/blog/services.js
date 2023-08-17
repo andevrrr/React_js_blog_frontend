@@ -14,8 +14,7 @@ class Services extends Component {
     servicePage: 1,
     servicesLoading: true,
     editLoading: false,
-    isAuth: false,
-    token: this.props.token
+    isAuth: false
   };
 
   componentDidMount() {
@@ -27,7 +26,7 @@ class Services extends Component {
   checkAuthStatus = () => {
     fetch("http://localhost:3000/check-auth-status", {
       headers: {
-        Authorization: 'Bearer ' + this.state.token,
+        Authorization: 'Bearer ' + this.props.token,
       },
     })
       .then((response) => response.json())
