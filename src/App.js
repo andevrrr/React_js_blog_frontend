@@ -31,6 +31,7 @@ class App extends Component {
     }
     if (new Date(expiryDate) <= new Date()) {
       this.logoutHandler();
+      this.props.history.push('/login');
       return;
     }
     const userId = localStorage.getItem("userId");
@@ -53,6 +54,8 @@ class App extends Component {
     localStorage.removeItem("token");
     localStorage.removeItem("expiryDate");
     localStorage.removeItem("userId");
+
+    this.props.history.push('/');
   };
 
   setAutoLogout = (milliseconds) => {
@@ -160,7 +163,7 @@ class App extends Component {
     if (this.state.isAuth) {
       routes = (
         <BrowserRouter>
-        <Header isAuth={this.state.isAuth}/>
+        <Header isAuth={this.state.isAuth} onLogout={this.logoutHandler}/>
           <Routes>
             <Route
               path="/admin"
@@ -196,7 +199,7 @@ class App extends Component {
     } else {
       routes = (
         <BrowserRouter>
-        <Header isAuth={this.state.isAuth}/>
+        <Header isAuth={this.state.isAuth} />
           <Routes>
             <Route
               path="/login"

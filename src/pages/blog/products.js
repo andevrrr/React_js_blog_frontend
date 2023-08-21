@@ -15,27 +15,29 @@ class Products extends Component {
     productsLoading: true,
     editLoading: false,
     isAuth: false,
+    token: this.props.token,
   };
 
   componentDidMount() {
-    console.log("Token received in Services:", this.props.token);
     this.checkAuthStatus();
     this.loadProducts();
   }
 
   checkAuthStatus = () => {
-    fetch("http://localhost:3000/check-auth-status", {
-      headers: {
-        Authorization: "Bearer " + this.props.token,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        this.setState({ isAuth: data.isAuthenticated }); // Update isAuth state
+    if (this.state.token) {
+      fetch("http://localhost:3000/check-auth-status", {
+        headers: {
+          Authorization: "Bearer " + this.props.token,
+        },
       })
-      .catch((error) => {
-        console.error("Error checking authentication status", error);
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          this.setState({ isAuth: data.isAuthenticated }); // Update isAuth state
+        })
+        .catch((error) => {
+          console.error("Error checking authentication status", error);
+        });
+    }
   };
 
   loadProducts = () => {

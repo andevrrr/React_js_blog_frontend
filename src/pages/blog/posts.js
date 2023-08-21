@@ -17,16 +17,17 @@ class Posts extends Component {
     editLoading: false,
     csrfToken: "",
     isAuth: false,
+    token: this.props.token,
   };
 
   componentDidMount() {
-    console.log("Token received in Services:", this.props.token);
     this.checkAuthStatus();
     this.loadPosts();
   }
 
   checkAuthStatus = () => {
-    fetch("http://localhost:3000/check-auth-status", {
+    if (this.state.token) {
+      fetch("http://localhost:3000/check-auth-status", {
       headers: {
         Authorization: "Bearer " + this.props.token,
       },
@@ -38,6 +39,9 @@ class Posts extends Component {
       .catch((error) => {
         console.error("Error checking authentication status", error);
       });
+    } else {
+      console.log("User is not logged in");
+    }
   };
 
   loadPosts = () => {
