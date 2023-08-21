@@ -160,9 +160,10 @@ class App extends Component {
     if (this.state.isAuth) {
       routes = (
         <BrowserRouter>
+        <Header isAuth={this.state.isAuth}/>
           <Routes>
             <Route
-              path="/"
+              path="/admin"
               exact
               element={
                 <Main userId={this.state.userId} token={this.state.token} />
@@ -170,19 +171,19 @@ class App extends Component {
             />
             <Route path="/" element={<Navigate to="/" />} />
             <Route
-              path="/services"
+              path="/admin/services"
               element={
                 <Services userId={this.state.userId} token={this.state.token} />
               }
             />
             <Route
-              path="/products"
+              path="/admin/products"
               element={
                 <Products userId={this.state.userId} token={this.state.token} />
               }
             />
             <Route
-              path="/posts"
+              path="/admin/posts"
               element={
                 <Posts userId={this.state.userId} token={this.state.token} />
               }
@@ -195,6 +196,7 @@ class App extends Component {
     } else {
       routes = (
         <BrowserRouter>
+        <Header isAuth={this.state.isAuth}/>
           <Routes>
             <Route
               path="/login"
@@ -215,7 +217,12 @@ class App extends Component {
                 />
               }
             />
-            
+            <Route
+              path="/services"
+              element={
+                <Services />
+              }
+            />
             {/* <Route path="/" element={<Navigate to="/" />} /> */}
           </Routes>
         </BrowserRouter>
@@ -223,7 +230,6 @@ class App extends Component {
     }
     return (
       <>
-        <Header />
         {routes}
         {/* <Header />
         <BrowserRouter>

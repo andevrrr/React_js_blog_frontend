@@ -1,51 +1,47 @@
-import "./Header.css";
+import React from 'react';
+import { Link } from 'react-router-dom'; // Assuming you're using React Router for navigation
+import './Header.css';
 
-function App() {
+function Header({ path, isAuth }) {
   return (
     <header>
       <div className="nav">
         <ul className="nav-list">
           <li>
-            <a className="<%= path === '/' ? 'active' : '' %>" href="/">
+            <Link className={path === '/' ? 'active' : ''} to={isAuth ? '/admin' : '/'}>
               Main
-            </a>
+            </Link>
           </li>
           <li>
-            <a
-              className="<%= path === '/services' ? 'active' : '' %>"
-              href="/services"
-            >
+            <Link className={path === '/services' ? 'active' : ''} to={isAuth ? '/admin/services' : '/services'}>
               Services
-            </a>
+            </Link>
           </li>
           <li>
-            <a
-              className="<%= path === '/products' ? 'active' : '' %>"
-              href="/products"
-            >
+            <Link className={path === '/products' ? 'active' : ''} to={isAuth ? '/admin/products' : '/products'}>
               Products
-            </a>
+            </Link>
           </li>
           <li>
-            <a className="<%= path === '/posts' ? 'active' : '' %>" href="/posts">
+            <Link className={path === '/posts' ? 'active' : ''} to={isAuth ? '/admin/posts' : '/posts'}>
               Posts
-            </a>
+            </Link>
           </li>
         </ul>
         <ul className="nav-list">
           <li>
-            <a className="<%= path === '/login' ? 'active' : '' %>" href="/login">
+            <Link className={path === '/login' ? 'active' : ''} to="/login">
               Login
-            </a>
+            </Link>
           </li>
           <li>
-            <a className="<%= path === '/signup' ? 'active' : '' %>" href="/signup">
+            <Link className={path === '/signup' ? 'active' : ''} to="/signup">
               SignUp
-            </a>
+            </Link>
           </li>
           <li className="main-header__item">
             <form action="/logout" method="post">
-              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+              {/* Add your CSRF token input here */}
               <button type="submit">Logout</button>
             </form>
           </li>
@@ -55,4 +51,4 @@ function App() {
   );
 }
 
-export default App;
+export default Header;
