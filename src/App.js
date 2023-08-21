@@ -55,7 +55,6 @@ class App extends Component {
     localStorage.removeItem("expiryDate");
     localStorage.removeItem("userId");
 
-    this.props.history.push('/');
   };
 
   setAutoLogout = (milliseconds) => {
@@ -246,14 +245,6 @@ class App extends Component {
     return (
       <>
         {routes}
-        {/* <Header />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Main />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<SignUp />} />
-          </Routes>
-        </BrowserRouter> */}
       </>
     );
   }

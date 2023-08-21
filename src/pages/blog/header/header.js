@@ -1,14 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom"; // Assuming you're using React Router for navigation
 import "./Header.css";
+import { NavLink, useNavigate, Navigate } from "react-router-dom";
 
 function Header({ path, isAuth, onLogout }) {
 
+  const navigate = useNavigate();
   const handleLogout = (event) => {
     event.preventDefault();
-    onLogout(); // Call the logout handler passed as a prop
+    onLogout(); 
+    navigate("/");
   };
-
 
   return (
     <header>
@@ -66,9 +68,9 @@ function Header({ path, isAuth, onLogout }) {
             </>
           ) : (
             <li className="main-header__item">
-            <button type="button" onClick={handleLogout}>
+            <NavLink to="/" exact onClick={handleLogout}>
               Logout
-            </button>
+            </NavLink>
           </li>
           )}
         </ul>
