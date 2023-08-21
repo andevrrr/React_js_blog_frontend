@@ -190,8 +190,8 @@ class App extends Component {
                 <Posts userId={this.state.userId} token={this.state.token} />
               }
             />
-            <Route path="/posts/:postId" element={<SinglePost />} />
-            <Route path="/products/:productId" element={<SingleProduct />} />
+            <Route path="/admin/posts/:postId" element={<SinglePost />} token={this.state.token} />
+            <Route path="/admin/products/:productId" element={<SingleProduct />} token={this.state.token} />
           </Routes>
         </BrowserRouter>
       );
@@ -237,7 +237,8 @@ class App extends Component {
                 <Posts />
               }
             />
-            {/* <Route path="/" element={<Navigate to="/" />} /> */}
+            <Route path="/posts/:postId" element={<SinglePost />}  />
+            <Route path="/products/:productId" element={<SingleProduct />}  />
           </Routes>
         </BrowserRouter>
       );

@@ -6,6 +6,8 @@ import CommentForm from "../../../components/comments/comments";
 const SingleProduct = () => {
   const { productId } = useParams();
 
+  const [isAuth, setIsAuth] = useState(false);
+
   const [product, setProduct] = useState({
     title: "",
     image: "",
@@ -15,6 +17,22 @@ const SingleProduct = () => {
     isVisible: false,
     isFeatured: false,
   });
+
+  useEffect(() => {
+    // Check authentication status
+    fetch("http://localhost:3000/check-auth-status", {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setIsAuth(data.isAuthenticated); // Update isAuth state
+      })
+      .catch((error) => {
+        console.error("Error checking authentication status", error);
+      });
+  }, []);
 
   useEffect(() => {
     fetch("http://localhost:3000/products/" + productId)
@@ -62,6 +80,35 @@ const SingleProduct = () => {
       });
   };
 
+  const deleteCommentHandler = (commentId) => {
+
+      fetch(
+        `http://localhost:3000/admin/delete-comment/product/${productId}/comments/${commentId}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      )
+        .then((res) => {
+          if (res.status !== 200) {
+            throw new Error("Failed to delete comment");
+          }
+          // Remove the deleted comment from the state
+          setProduct((prevProduct) => ({
+            ...prevProduct,
+            comments: prevProduct.comments.filter(
+              (comment) => comment._id !== commentId
+            ),
+          }));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    
+  };
+
   return (
     <section>
       <h1>{product.title}</h1>
@@ -78,9 +125,16 @@ const SingleProduct = () => {
       <h2>Comments:</h2>
       {product.comments && product.comments.length > 0 ? (
         product.comments.map((comment, index) => (
-          <p key={comment._id}>
-            {index + 1} - {comment.text}
-          </p>
+          <>
+            <p key={comment._id}>
+              {index + 1} - {comment.text}
+            </p>
+            {isAuth && (
+              <button onClick={() => deleteCommentHandler(comment._id)}>
+                Delete
+              </button>
+            )}
+          </>
         ))
       ) : (
         <p>No comments available.</p>
