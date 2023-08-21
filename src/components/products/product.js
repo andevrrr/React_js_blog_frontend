@@ -22,11 +22,11 @@ const Product = (props) => (
     <div>
       <Button link={props.id}>View more</Button>
       {props.isAuthenticated && (
-        <div>
-          <Button onClick={props.onStartEdit}>Edit</Button>
-          <Button onClick={props.onDelete}>Delete</Button>
-        </div>
-      )}
+          <>
+            <Button onClick={props.onStartEdit}>Edit</Button>
+            <Button onClick={props.onDelete}>Delete</Button>
+          </>
+        )}
     </div>
     {props.isAuthenticated && (
       <div>

@@ -16,18 +16,32 @@ class Posts extends Component {
     postsLoading: true,
     editLoading: false,
     csrfToken: "",
+    isAuth: false,
   };
 
   componentDidMount() {
+    console.log("Token received in Services:", this.props.token);
+    this.checkAuthStatus();
     this.loadPosts();
   }
 
-  loadPosts = () => {
-    fetch("http://localhost:3000/posts", {
+  checkAuthStatus = () => {
+    fetch("http://localhost:3000/check-auth-status", {
       headers: {
-        Authorization: 'Bearer ' + this.props.token,
+        Authorization: "Bearer " + this.props.token,
       },
     })
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({ isAuth: data.isAuthenticated }); // Update isAuth state
+      })
+      .catch((error) => {
+        console.error("Error checking authentication status", error);
+      });
+  };
+
+  loadPosts = () => {
+    fetch("http://localhost:3000/posts")
       .then((response) => {
         if (response.status !== 200) {
           throw new Error("Failed to fetch posts");
@@ -52,7 +66,7 @@ class Posts extends Component {
 
   newPostHandler = () => {
     this.setState({ isEditing: true });
-  }
+  };
 
   onStartEditPostHandler = (postId) => {
     this.setState((prevState) => {
@@ -86,9 +100,9 @@ class Posts extends Component {
     fetch(url, {
       method: method,
       body: formData,
-      // headers: {
-      //   Authorization: 'Bearer ' + this.props.token
-      // }
+      headers: {
+        Authorization: "Bearer " + this.props.token,
+      },
     })
       .then((res) => {
         if (res.status !== 200 && res.status !== 201) {
@@ -128,9 +142,9 @@ class Posts extends Component {
     this.setState({ postsLoading: true });
     fetch("http://localhost:3000/admin/delete-post/" + postId, {
       method: "POST",
-      // headers: {
-      //   'X-CSRF-Token': this.state.csrfToken
-      // }
+      headers: {
+        Authorization: "Bearer " + this.props.token,
+      },
     })
       .then((res) => {
         if (res.status !== 200 && res.status !== 201) {
@@ -155,18 +169,23 @@ class Posts extends Component {
   render() {
     return (
       <div>
-        <PostEdit
-          editing={this.state.isEditing}
-          selectedPost={this.state.editPost}
-          loading={this.state.editLoading}
-          onCancelEdit={this.cancelEditHandler}
-          onFinishEdit={this.finishEditHandler}
-        />
-        <Button mode="raised" design="accent" onClick={this.newPostHandler}>
-          New post
-        </Button>
+        {this.state.isAuth && (
+          <div>
+            <PostEdit
+              editing={this.state.isEditing}
+              selectedPost={this.state.editPost}
+              loading={this.state.editLoading}
+              onCancelEdit={this.cancelEditHandler}
+              onFinishEdit={this.finishEditHandler}
+            />
+            <Button mode="raised" design="accent" onClick={this.newPostHandler}>
+              New post
+            </Button>
+          </div>
+        )}
         {this.state.posts.map((post) => (
           <Post
+            isAuthenticated={this.state.isAuth}
             key={post._id}
             id={post._id}
             isVisible={post.isVisible}

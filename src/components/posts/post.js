@@ -1,18 +1,23 @@
-import React from 'react';
+import React from "react";
 
-import Button from '../Button/Button';
-import StatusToggle from '../Status/status';
+import Button from "../Button/Button";
+import StatusToggle from "../Status/status";
 
-const Post = props => (
-    <article>
-        <h2>{props.title}</h2>
-        <p>{props.content}</p>
-        <div>
-            <Button link={props.id}>View more</Button>
-            <Button onClick={props.onStartEdit}>Edit</Button>
-            <Button onClick={props.onDelete}>Delete</Button>
-        </div>
-        <div>
+const Post = (props) => (
+  <article>
+    <h2>{props.title}</h2>
+    <p>{props.content}</p>
+    <div>
+      <Button link={props.id}>View more</Button>
+      {props.isAuthenticated && (
+        <>
+          <Button onClick={props.onStartEdit}>Edit</Button>
+          <Button onClick={props.onDelete}>Delete</Button>
+        </>
+      )}
+    </div>
+    {props.isAuthenticated && (
+      <div>
         <StatusToggle
           model="posts"
           field="isVisible"
@@ -26,7 +31,8 @@ const Post = props => (
           initialStatus={props.isFeatured}
         />
       </div>
-    </article>
+    )}
+  </article>
 );
 
 export default Post;

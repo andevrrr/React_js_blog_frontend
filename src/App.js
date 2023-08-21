@@ -229,6 +229,12 @@ class App extends Component {
                 <Products />
               }
             />
+            <Route
+              path="/posts"
+              element={
+                <Posts />
+              }
+            />
             {/* <Route path="/" element={<Navigate to="/" />} /> */}
           </Routes>
         </BrowserRouter>
