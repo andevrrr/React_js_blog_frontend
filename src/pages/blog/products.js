@@ -14,18 +14,32 @@ class Products extends Component {
     productPage: 1,
     productsLoading: true,
     editLoading: false,
+    isAuth: false,
   };
 
   componentDidMount() {
+    console.log("Token received in Services:", this.props.token);
+    this.checkAuthStatus();
     this.loadProducts();
   }
 
-  loadProducts = () => {
-    fetch("http://localhost:3000/products", {
+  checkAuthStatus = () => {
+    fetch("http://localhost:3000/check-auth-status", {
       headers: {
-        Authorization: 'Bearer ' + this.props.token,
+        Authorization: "Bearer " + this.props.token,
       },
     })
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({ isAuth: data.isAuthenticated }); // Update isAuth state
+      })
+      .catch((error) => {
+        console.error("Error checking authentication status", error);
+      });
+  };
+
+  loadProducts = () => {
+    fetch("http://localhost:3000/products")
       .then((response) => {
         if (response.status !== 200) {
           throw new Error("Failed to fetch products");
@@ -36,7 +50,7 @@ class Products extends Component {
         this.setState({
           products: resData.products.map((product) => ({
             ...product,
-            imagePath: product.image
+            imagePath: product.image,
           })),
           totalProducts: resData.totalItems,
           productsLoading: false,
@@ -51,11 +65,13 @@ class Products extends Component {
 
   newProductHandler = () => {
     this.setState({ isEditing: true });
-  }
+  };
 
   onStartEditProductHandler = (productId) => {
     this.setState((prevState) => {
-      const loadedProduct = { ...prevState.products.find((p) => p._id === productId) };
+      const loadedProduct = {
+        ...prevState.products.find((p) => p._id === productId),
+      };
 
       return {
         isEditing: true,
@@ -75,14 +91,16 @@ class Products extends Component {
     const formData = new FormData();
     console.log(productData.image);
     formData.append("title", productData.title);
-    formData.append('image', productData.image);
+    formData.append("image", productData.image);
     formData.append("price", productData.price);
     formData.append("description", productData.description);
     formData.append("inStock", productData.inStock);
     let url = "http://localhost:3000/admin/add-product";
     let method = "POST";
     if (this.state.editProduct) {
-      url = "http://localhost:3000/admin/edit-product/" + this.state.editProduct._id;
+      url =
+        "http://localhost:3000/admin/edit-product/" +
+        this.state.editProduct._id;
       method = "POST";
     }
 
@@ -90,8 +108,8 @@ class Products extends Component {
       method: method,
       body: formData,
       headers: {
-        Authorization: 'Bearer ' + this.props.token
-      }
+        Authorization: "Bearer " + this.props.token,
+      },
     })
       .then((res) => {
         if (res.status !== 200 && res.status !== 201) {
@@ -134,7 +152,7 @@ class Products extends Component {
     fetch("http://localhost:3000/admin/delete-product/" + productId, {
       method: "POST",
       headers: {
-        Authorization: 'Bearer ' + this.props.token,
+        Authorization: "Bearer " + this.props.token,
       },
     })
       .then((res) => {
@@ -147,7 +165,9 @@ class Products extends Component {
         console.log(resData);
         this.loadProducts();
         this.setState((prevState) => {
-          const updatedProducts = prevState.products.filter((p) => p._id !== productId);
+          const updatedProducts = prevState.products.filter(
+            (p) => p._id !== productId
+          );
           return { products: updatedProducts, productsLoading: false };
         });
       })
@@ -160,18 +180,27 @@ class Products extends Component {
   render() {
     return (
       <div>
-        <ProductEdit
-          editing={this.state.isEditing}
-          selectedProduct={this.state.editProduct}
-          loading={this.state.editLoading}
-          onCancelEdit={this.cancelEditHandler}
-          onFinishEdit={this.finishEditHandler}
-        />
-        <Button mode="raised" design="accent" onClick={this.newProductHandler}>
-          New product
-        </Button>
+        {this.state.isAuth && (
+          <div>
+            <ProductEdit
+              editing={this.state.isEditing}
+              selectedProduct={this.state.editProduct}
+              loading={this.state.editLoading}
+              onCancelEdit={this.cancelEditHandler}
+              onFinishEdit={this.finishEditHandler}
+            />
+            <Button
+              mode="raised"
+              design="accent"
+              onClick={this.newProductHandler}
+            >
+              New product
+            </Button>
+          </div>
+        )}
         {this.state.products.map((product) => (
           <Product
+            isAuthenticated={this.state.isAuth}
             id={product._id}
             key={product._id}
             isVisible={product.isVisible}

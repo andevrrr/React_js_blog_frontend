@@ -20,22 +20,14 @@ class Posts extends Component {
 
   componentDidMount() {
     this.loadPosts();
-    // this.fetchCsrfToken();
   }
 
-  // fetchCsrfToken = () => {
-  //   axios
-  //     .get("http://localhost:3000/get-csrf-token")
-  //     .then((response) => {
-  //       this.setState({ csrfToken: response.data.csrfToken });
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching CSRF token", error);
-  //     });
-  // };
-
   loadPosts = () => {
-    fetch("http://localhost:3000/posts")
+    fetch("http://localhost:3000/posts", {
+      headers: {
+        Authorization: 'Bearer ' + this.props.token,
+      },
+    })
       .then((response) => {
         if (response.status !== 200) {
           throw new Error("Failed to fetch posts");

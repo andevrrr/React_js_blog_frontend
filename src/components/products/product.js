@@ -1,10 +1,9 @@
 import React from "react";
 
 import Button from "../Button/Button";
-import Image from "../Image/Image";
 import "./Products.css";
 
-import StatusToggle from '../Status/status';
+import StatusToggle from "../Status/status";
 
 const Product = (props) => (
   <article>
@@ -22,10 +21,15 @@ const Product = (props) => (
     </div>
     <div>
       <Button link={props.id}>View more</Button>
-      <Button onClick={props.onStartEdit}>Edit</Button>
-      <Button onClick={props.onDelete}>Delete</Button>
+      {props.isAuthenticated && (
+        <div>
+          <Button onClick={props.onStartEdit}>Edit</Button>
+          <Button onClick={props.onDelete}>Delete</Button>
+        </div>
+      )}
     </div>
-    <div>
+    {props.isAuthenticated && (
+      <div>
         <StatusToggle
           model="products"
           field="isVisible"
@@ -39,6 +43,7 @@ const Product = (props) => (
           initialStatus={props.isFeatured}
         />
       </div>
+    )}
   </article>
 );
 

@@ -14,7 +14,7 @@ class Services extends Component {
     servicePage: 1,
     servicesLoading: true,
     editLoading: false,
-    isAuth: false
+    isAuth: false,
   };
 
   componentDidMount() {
@@ -26,7 +26,7 @@ class Services extends Component {
   checkAuthStatus = () => {
     fetch("http://localhost:3000/check-auth-status", {
       headers: {
-        Authorization: 'Bearer ' + this.props.token,
+        Authorization: "Bearer " + this.props.token,
       },
     })
       .then((response) => response.json())
@@ -105,7 +105,7 @@ class Services extends Component {
       method: method,
       body: formData,
       headers: {
-        Authorization: 'Bearer ' + this.props.token,
+        Authorization: "Bearer " + this.props.token,
       },
     })
       .then((res) => {
@@ -148,7 +148,7 @@ class Services extends Component {
     fetch("http://localhost:3000/admin/delete-service/" + serviceId, {
       method: "POST",
       headers: {
-        Authorization: 'Bearer ' + this.props.token,
+        Authorization: "Bearer " + this.props.token,
       },
     })
       .then((res) => {
@@ -196,7 +196,7 @@ class Services extends Component {
         )}
         {this.state.services.map((service) => (
           <Service
-          isAuthenticated={this.state.isAuth}
+            isAuthenticated={this.state.isAuth}
             key={service._id}
             id={service._id}
             isVisible={service.isVisible}
