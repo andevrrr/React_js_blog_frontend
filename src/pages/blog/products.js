@@ -89,9 +89,9 @@ class Products extends Component {
     fetch(url, {
       method: method,
       body: formData,
-      // headers: {
-      //   Authorization: 'Bearer ' + this.props.token
-      // }
+      headers: {
+        Authorization: 'Bearer ' + this.props.token
+      }
     })
       .then((res) => {
         if (res.status !== 200 && res.status !== 201) {
@@ -133,9 +133,9 @@ class Products extends Component {
     this.setState({ productsLoading: true });
     fetch("http://localhost:3000/admin/delete-product/" + productId, {
       method: "POST",
-      // headers: {
-      //   'X-CSRF-Token': this.state.csrfToken
-      // }
+      headers: {
+        Authorization: 'Bearer ' + this.props.token,
+      },
     })
       .then((res) => {
         if (res.status !== 200 && res.status !== 201) {
