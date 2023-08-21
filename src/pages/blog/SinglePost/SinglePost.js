@@ -6,13 +6,31 @@ import CommentForm from "../../../components/comments/comments";
 const SinglePost = () => {
   const { postId } = useParams(); // Access the postId parameter
 
+  const [isAuth, setIsAuth] = useState(false);
+
   const [post, setPost] = useState({
     title: "",
     date: "",
     content: "",
     isFeatured: false,
-    isVisible: false
+    isVisible: false,
   });
+
+  useEffect(() => {
+    // Check authentication status
+    fetch("http://localhost:3000/check-auth-status", {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setIsAuth(data.isAuthenticated); // Update isAuth state
+      })
+      .catch((error) => {
+        console.error("Error checking authentication status", error);
+      });
+  }, []);
 
   useEffect(() => {
     fetch("http://localhost:3000/posts/" + postId)
@@ -38,24 +56,51 @@ const SinglePost = () => {
   }, [postId]);
 
   const addCommentHandler = (newComment) => {
-    const commentData = {comment: newComment};
+    const commentData = { comment: newComment };
 
     fetch(`http://localhost:3000/posts/${postId}/comments`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(commentData),
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(commentData),
     })
-    .then(res => {
-        if (res.status !== 200){
-            throw new Error("Failed");
+      .then((res) => {
+        if (res.status !== 200) {
+          throw new Error("Failed");
         }
         res.json();
-    })
-    .catch(err => {
+      })
+      .catch((err) => {
         console.log(err);
-    })
+      });
+  };
+
+  const deleteCommentHandler = (commentId) => {
+    fetch(
+      `http://localhost:3000/admin/delete-comment/post/${postId}/comments/${commentId}`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      }
+    )
+      .then((res) => {
+        if (res.status !== 200) {
+          throw new Error("Failed to delete comment");
+        }
+        // Remove the deleted comment from the state
+        setPost((prevPost) => ({
+          ...prevPost,
+          comments: prevPost.comments.filter(
+            (comment) => comment._id !== commentId
+          ),
+        }));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -66,7 +111,16 @@ const SinglePost = () => {
       <h2>Comments:</h2>
       {post.comments && post.comments.length > 0 ? (
         post.comments.map((comment, index) => (
-          <p key={comment._id}>{index+1} - {comment.text}</p>
+          <div>
+            <p key={comment._id}>
+              {index + 1} - {comment.text}
+            </p>
+            {isAuth && (
+              <button onClick={() => deleteCommentHandler(comment._id)}>
+                Delete
+              </button>
+            )}
+          </div>
         ))
       ) : (
         <p>No comments available.</p>
