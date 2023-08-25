@@ -19,7 +19,8 @@ const SingleProduct = () => {
   });
 
   useEffect(() => {
-    // Check authentication status
+    if (localStorage.getItem("token")){
+      // Check authentication status
     fetch("http://localhost:3000/check-auth-status", {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
@@ -32,6 +33,10 @@ const SingleProduct = () => {
       .catch((error) => {
         console.error("Error checking authentication status", error);
       });
+    }
+      else {
+        console.log("User is not logged in");
+      }
   }, []);
 
   useEffect(() => {

@@ -37,6 +37,8 @@ class Services extends Component {
         .catch((error) => {
           console.error("Error checking authentication status", error);
         });
+    } else {
+      console.log("User is not logged in");
     }
   };
 
