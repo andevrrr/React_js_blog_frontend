@@ -31,7 +31,7 @@ class App extends Component {
     }
     if (new Date(expiryDate) <= new Date()) {
       this.logoutHandler();
-      this.props.history.push('/login');
+      this.props.history.push("/login");
       return;
     }
     const userId = localStorage.getItem("userId");
@@ -54,7 +54,6 @@ class App extends Component {
     localStorage.removeItem("token");
     localStorage.removeItem("expiryDate");
     localStorage.removeItem("userId");
-
   };
 
   setAutoLogout = (milliseconds) => {
@@ -83,6 +82,7 @@ class App extends Component {
           console.log("Error!");
           throw new Error("Could not authenticate you!");
         }
+        
         return res.json();
       })
       .then((resData) => {
@@ -162,7 +162,7 @@ class App extends Component {
     if (this.state.isAuth) {
       routes = (
         <BrowserRouter>
-        <Header isAuth={this.state.isAuth} onLogout={this.logoutHandler}/>
+          <Header isAuth={this.state.isAuth} onLogout={this.logoutHandler} />
           <Routes>
             <Route
               path="/admin"
@@ -190,15 +190,21 @@ class App extends Component {
                 <Posts userId={this.state.userId} token={this.state.token} />
               }
             />
-            <Route path="/admin/posts/:postId" element={<SinglePost />} token={this.state.token} />
-            <Route path="/admin/products/:productId" element={<SingleProduct />} token={this.state.token} />
+            <Route
+              path="/admin/posts/:postId"
+              element={<SinglePost token={this.state.token} />}
+            />
+            <Route
+              path="/admin/products/:productId"
+              element={<SingleProduct token={this.state.token} />}
+            />
           </Routes>
         </BrowserRouter>
       );
     } else {
       routes = (
         <BrowserRouter>
-        <Header isAuth={this.state.isAuth} />
+          <Header isAuth={this.state.isAuth} />
           <Routes>
             <Route
               path="/login"
@@ -219,35 +225,16 @@ class App extends Component {
                 />
               }
             />
-            <Route
-              path="/services"
-              element={
-                <Services />
-              }
-            />
-            <Route
-              path="/products"
-              element={
-                <Products />
-              }
-            />
-            <Route
-              path="/posts"
-              element={
-                <Posts />
-              }
-            />
-            <Route path="/posts/:postId" element={<SinglePost />}  />
-            <Route path="/products/:productId" element={<SingleProduct />}  />
+            <Route path="/services" element={<Services />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/posts" element={<Posts />} />
+            <Route path="/posts/:postId" element={<SinglePost />} />
+            <Route path="/products/:productId" element={<SingleProduct />} />
           </Routes>
         </BrowserRouter>
       );
     }
-    return (
-      <>
-        {routes}
-      </>
-    );
+    return <>{routes}</>;
   }
 }
 

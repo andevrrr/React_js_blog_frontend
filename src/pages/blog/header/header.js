@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom"; // Assuming you're using React Router for navigation
 import "./Header.css";
-import { NavLink, useNavigate, Navigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 function Header({ path, isAuth, onLogout }) {
 
@@ -68,7 +68,7 @@ function Header({ path, isAuth, onLogout }) {
             </>
           ) : (
             <li className="main-header__item">
-            <NavLink to="/" exact onClick={handleLogout}>
+            <NavLink to="/"  onClick={handleLogout}>
               Logout
             </NavLink>
           </li>
