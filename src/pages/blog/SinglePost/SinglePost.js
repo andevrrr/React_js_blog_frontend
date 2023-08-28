@@ -17,24 +17,23 @@ const SinglePost = () => {
   });
 
   useEffect(() => {
-    if (localStorage.getItem("token")){
+    if (localStorage.getItem("token")) {
       // Check authentication status
-    fetch("http://localhost:3000/check-auth-status", {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setIsAuth(data.isAuthenticated); // Update isAuth state
+      fetch("http://localhost:3000/check-auth-status", {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
       })
-      .catch((error) => {
-        console.error("Error checking authentication status", error);
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          setIsAuth(data.isAuthenticated); // Update isAuth state
+        })
+        .catch((error) => {
+          console.error("Error checking authentication status", error);
+        });
+    } else {
+      console.log("User is not logged in");
     }
-      else {
-        console.log("User is not logged in");
-      }
   }, []);
 
   useEffect(() => {
@@ -116,8 +115,8 @@ const SinglePost = () => {
       <h2>Comments:</h2>
       {post.comments && post.comments.length > 0 ? (
         post.comments.map((comment, index) => (
-          <div>
-            <p key={comment._id}>
+          <div key={comment._id}>
+            <p>
               {index + 1} - {comment.text}
             </p>
             {isAuth && (
@@ -130,6 +129,7 @@ const SinglePost = () => {
       ) : (
         <p>No comments available.</p>
       )}
+
       <CommentForm onAddComment={addCommentHandler} />
     </section>
   );

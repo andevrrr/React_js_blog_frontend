@@ -19,24 +19,23 @@ const SingleProduct = () => {
   });
 
   useEffect(() => {
-    if (localStorage.getItem("token")){
+    if (localStorage.getItem("token")) {
       // Check authentication status
-    fetch("http://localhost:3000/check-auth-status", {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setIsAuth(data.isAuthenticated); // Update isAuth state
+      fetch("http://localhost:3000/check-auth-status", {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
       })
-      .catch((error) => {
-        console.error("Error checking authentication status", error);
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          setIsAuth(data.isAuthenticated); // Update isAuth state
+        })
+        .catch((error) => {
+          console.error("Error checking authentication status", error);
+        });
+    } else {
+      console.log("User is not logged in");
     }
-      else {
-        console.log("User is not logged in");
-      }
   }, []);
 
   useEffect(() => {
@@ -86,32 +85,30 @@ const SingleProduct = () => {
   };
 
   const deleteCommentHandler = (commentId) => {
-
-      fetch(
-        `http://localhost:3000/admin/delete-comment/product/${productId}/comments/${commentId}`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("token"),
-          },
+    fetch(
+      `http://localhost:3000/admin/delete-comment/product/${productId}/comments/${commentId}`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      }
+    )
+      .then((res) => {
+        if (res.status !== 200) {
+          throw new Error("Failed to delete comment");
         }
-      )
-        .then((res) => {
-          if (res.status !== 200) {
-            throw new Error("Failed to delete comment");
-          }
-          // Remove the deleted comment from the state
-          setProduct((prevProduct) => ({
-            ...prevProduct,
-            comments: prevProduct.comments.filter(
-              (comment) => comment._id !== commentId
-            ),
-          }));
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    
+        // Remove the deleted comment from the state
+        setProduct((prevProduct) => ({
+          ...prevProduct,
+          comments: prevProduct.comments.filter(
+            (comment) => comment._id !== commentId
+          ),
+        }));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -130,8 +127,8 @@ const SingleProduct = () => {
       <h2>Comments:</h2>
       {product.comments && product.comments.length > 0 ? (
         product.comments.map((comment, index) => (
-          <>
-            <p key={comment._id}>
+          <div key={comment._id}>
+            <p>
               {index + 1} - {comment.text}
             </p>
             {isAuth && (
@@ -139,7 +136,7 @@ const SingleProduct = () => {
                 Delete
               </button>
             )}
-          </>
+          </div>
         ))
       ) : (
         <p>No comments available.</p>
