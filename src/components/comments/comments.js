@@ -16,7 +16,7 @@ const CommentForm = ({ onAddComment }) => {
   };
 
   return (
-    <form onSubmit={submitHandler}>
+    <form onSubmit={submitHandler} noValidate>
       <input
         type="text"
         placeholder="Name"

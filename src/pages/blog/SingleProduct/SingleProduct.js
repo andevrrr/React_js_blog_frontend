@@ -64,7 +64,7 @@ const SingleProduct = () => {
   }, [productId]);
 
   const addCommentHandler = (newComment) => {
-    const commentData = { comment: newComment };
+    const commentData = { name: newComment.name, email: newComment.email, comment: newComment.comment };
 
     fetch(`http://localhost:3000/products/${productId}/comments`, {
       method: "POST",
