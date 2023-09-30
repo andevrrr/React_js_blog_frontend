@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Button from '../Button/Button';
+import Button from '../button/Button';
 
 import StatusToggle from '../Status/status';
 

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import Service from "../../components/Services/Service";
 import ServiceEdit from "../../components/Services/ServiceEdit";
-import Button from "../../components/Button/Button";
+import Button from "../../components/button/Button";
 
 class Services extends Component {
   state = {

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import Product from "../../components/Products/Product";
 import ProductEdit from "../../components/Products/ProductEdit";
-import Button from "../../components/Button/Button";
+import Button from "../../components/button/Button";
 
 class Products extends Component {
   state = {

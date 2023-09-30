@@ -3,7 +3,7 @@ import Post from "../../components/Posts/Post";
 //import axios from "axios";
 
 import PostEdit from "../../components/Posts/PostEdit";
-import Button from "../../components/Button/Button";
+import Button from "../../components/button/Button";
 
 class Posts extends Component {
   state = {
