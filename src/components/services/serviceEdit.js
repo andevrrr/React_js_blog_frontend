@@ -23,13 +23,31 @@ const SERVICE_FORM = {
     touched: false,
     // validators: [required, length({ min: 5 })],
   },
+  category: { // New state property for selected category
+    value: "", // Initially empty
+    valid: false,
+    touched: false,
+  },
 };
 
 class ServiceEdit extends Component {
   state = {
     serviceForm: SERVICE_FORM,
     formIsValid: false,
+    categories: [],
   };
+
+  componentDidMount() {
+    // Fetch and populate the categories when the component mounts
+    fetch("http://localhost:3000/admin/get-service-category")
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({ categories: data });
+      })
+      .catch((error) => {
+        console.error("Error fetching categories:", error);
+      });
+  }
 
   componentDidUpdate(prevProps, prevState) {
     if (
@@ -53,6 +71,11 @@ class ServiceEdit extends Component {
             value: this.props.selectedService.price,
             valid: true,
           },
+        category: {
+          ...prevState.serviceForm.category,
+            value: this.props.selectedService.category,
+            valid: true,
+        }
       };
       this.setState({ serviceForm: serviceForm, formIsValid: true });
     }
@@ -72,6 +95,9 @@ class ServiceEdit extends Component {
           value: value
         },
       };
+      if (input === "category") {
+        updatedForm[input].value = value;
+      }
 
       let formIsValid = true;
       for (const inputName in updatedForm) {
@@ -111,6 +137,7 @@ class ServiceEdit extends Component {
       name: this.state.serviceForm.name.value,
       time: this.state.serviceForm.time.value,
       price: this.state.serviceForm.price.value,
+      category: this.state.serviceForm.category.value,
     };
     this.props.onFinishEdit(service);
     this.setState({
@@ -162,6 +189,23 @@ class ServiceEdit extends Component {
               value={this.state.serviceForm["price"].value}
             />
           </form>
+          <div className="form-control">
+              <label htmlFor="category">Category</label>
+              <select
+                id="category"
+                onChange={(event) =>
+                  this.serviceInputChangeHandler("category", event.target.value)
+                }
+                value={this.state.serviceForm["category"].value}
+              >
+                <option value="">Select a category</option>
+                {this.state.categories.map((category) => (
+                  <option key={category._id} value={category._id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+            </div>
         </Modal>
       </Fragment>
     ) : null;

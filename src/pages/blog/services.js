@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import Service from "../../components/Services/Service";
 import ServiceEdit from "../../components/Services/ServiceEdit";
 import Button from "../../components/button/Button";
+import CategoryForm from "../../components/CategoryForm/CategoryForm"; 
 
 class Services extends Component {
   state = {
@@ -16,6 +17,7 @@ class Services extends Component {
     editLoading: false,
     isAuth: false,
     token: this.props.token,
+    categories: [],
   };
 
   componentDidMount() {
@@ -96,6 +98,7 @@ class Services extends Component {
     formData.append("name", serviceData.name);
     formData.append("time", serviceData.time);
     formData.append("price", serviceData.price);
+    formData.append("category", serviceData.category)
     let url = "http://localhost:3000/admin/add-service";
     let method = "POST";
     if (this.state.editService) {
@@ -177,6 +180,32 @@ class Services extends Component {
       });
   };
 
+  createCategoryHandler = (categoryName) => {
+    // Make a POST request to your backend API to create a new category
+    fetch("http://localhost:3000/admin/add-service-category", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.props.token, // Include your authentication token
+      },
+      body: JSON.stringify({ name: categoryName }), // Send the category name
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Handle the response, you can update your state or perform any actions as needed
+        console.log("Category created successfully:", data);
+        // You can add the new category to your state if needed
+        // Update the state to re-render the component with the new category
+        this.setState((prevState) => ({
+          categories: [...prevState.categories, data], // Assuming you have a state property called 'categories'
+        }));
+      })
+      .catch((error) => {
+        console.error("Error creating category:", error);
+        // Handle any error conditions here
+      });
+  };
+
   render() {
     return (
       <div>
@@ -196,6 +225,7 @@ class Services extends Component {
             >
               New service
             </Button>
+            <CategoryForm onSubmit={this.createCategoryHandler} />
           </div>
         )}
         {this.state.services.map((service) => (
