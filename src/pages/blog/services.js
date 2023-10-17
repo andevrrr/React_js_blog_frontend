@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import Service from "../../components/Services/Service";
 import ServiceEdit from "../../components/Services/ServiceEdit";
 import Button from "../../components/button/Button";
-import CategoryForm from "../../components/CategoryForm/CategoryForm"; 
+import CategoryForm from "../../components/CategoryForm/CategoryForm";
 
 class Services extends Component {
   state = {
@@ -18,11 +18,14 @@ class Services extends Component {
     isAuth: false,
     token: this.props.token,
     categories: [],
+    totalCategories: 0,
+    categoriesLoading: true,
   };
 
   componentDidMount() {
     this.checkAuthStatus();
     this.loadServices();
+    this.loadCategories();
   }
 
   checkAuthStatus = () => {
@@ -65,6 +68,27 @@ class Services extends Component {
       .catch(this.catchError);
   };
 
+  loadCategories = () => {
+    fetch("http://localhost:3000/categories")
+      .then((response) => {
+        if (response.status !== 200) {
+          throw new Error("Faild to fetch categories");
+        }
+
+        return response.json();
+      })
+      .then((resData) => {
+        this.setState({
+          categories: resData.categories.map((category) => ({
+            ...category,
+          })),
+          totalCategories: resData.totalItems,
+          categoriesLoading: false,
+        });
+      })
+      .catch(this.catchError);
+  };
+
   catchError = (error) => {
     this.setState({ error: error });
   };
@@ -98,7 +122,7 @@ class Services extends Component {
     formData.append("name", serviceData.name);
     formData.append("time", serviceData.time);
     formData.append("price", serviceData.price);
-    formData.append("category", serviceData.category)
+    formData.append("category", serviceData.category);
     let url = "http://localhost:3000/admin/add-service";
     let method = "POST";
     if (this.state.editService) {
@@ -228,20 +252,34 @@ class Services extends Component {
             <CategoryForm onSubmit={this.createCategoryHandler} />
           </div>
         )}
-        {this.state.services.map((service) => (
-          <Service
-            isAuthenticated={this.state.isAuth}
-            key={service._id}
-            id={service._id}
-            isVisible={service.isVisible}
-            isFeatured={service.isFeatured}
-            name={service.name}
-            time={service.time}
-            price={service.price}
-            date={new Date(service.createdAt).toLocaleDateString("en-GB")}
-            onStartEdit={this.onStartEditServiceHandler.bind(this, service._id)}
-            onDelete={this.deleteServiceHandler.bind(this, service._id)}
-          />
+        {this.state.categories.map((category) => (
+          <div>
+            <h1 key={category._id} id={category._id}>
+              {category.name}
+            </h1>
+            <div>
+              {this.state.services
+              .filter((service) => service.category[0] === category._id)
+              .map((service) => (
+                <Service
+                  isAuthenticated={this.state.isAuth}
+                  key={service._id}
+                  id={service._id}
+                  isVisible={service.isVisible}
+                  isFeatured={service.isFeatured}
+                  name={service.name}
+                  time={service.time}
+                  price={service.price}
+                  date={new Date(service.createdAt).toLocaleDateString("en-GB")}
+                  onStartEdit={this.onStartEditServiceHandler.bind(
+                    this,
+                    service._id
+                  )}
+                  onDelete={this.deleteServiceHandler.bind(this, service._id)}
+                />
+              ))}
+            </div>
+          </div>
         ))}
       </div>
     );
