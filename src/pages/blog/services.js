@@ -69,7 +69,7 @@ class Services extends Component {
   };
 
   loadCategories = () => {
-    fetch("http://localhost:3000/categories")
+    fetch("http://localhost:3000/service-categories")
       .then((response) => {
         if (response.status !== 200) {
           throw new Error("Faild to fetch categories");
@@ -253,8 +253,8 @@ class Services extends Component {
           </div>
         )}
         {this.state.categories.map((category) => (
-          <div>
-            <h1 key={category._id} id={category._id}>
+          <div key={category._id}>
+            <h1 id={category._id}>
               {category.name}
             </h1>
             <div>

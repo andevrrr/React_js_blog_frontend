@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import Product from "../../components/Products/Product";
 import ProductEdit from "../../components/Products/ProductEdit";
 import Button from "../../components/button/Button";
+import CategoryForm from "../../components/CategoryForm/CategoryForm";
 
 class Products extends Component {
   state = {
@@ -16,11 +17,15 @@ class Products extends Component {
     editLoading: false,
     isAuth: false,
     token: this.props.token,
+    categories: [],
+    totalCategories: 0,
+    categoriesLoading: true,
   };
 
   componentDidMount() {
     this.checkAuthStatus();
     this.loadProducts();
+    this.loadCategories();
   }
 
   checkAuthStatus = () => {
@@ -63,6 +68,27 @@ class Products extends Component {
       .catch(this.catchError);
   };
 
+  loadCategories = () => {
+    fetch("http://localhost:3000/product-categories")
+      .then((response) => {
+        if (response.status !== 200) {
+          throw new Error("Faild to fetch categories");
+        }
+
+        return response.json();
+      })
+      .then((resData) => {
+        this.setState({
+          categories: resData.categories.map((category) => ({
+            ...category,
+          })),
+          totalCategories: resData.totalItems,
+          categoriesLoading: false,
+        });
+      })
+      .catch(this.catchError);
+  };
+
   catchError = (error) => {
     this.setState({ error: error });
   };
@@ -99,6 +125,7 @@ class Products extends Component {
     formData.append("price", productData.price);
     formData.append("description", productData.description);
     formData.append("inStock", productData.inStock);
+    formData.append("category", productData.category);
     let url = "http://localhost:3000/admin/add-product";
     let method = "POST";
     if (this.state.editProduct) {
@@ -181,6 +208,32 @@ class Products extends Component {
       });
   };
 
+  createCategoryHandler = (categoryName) => {
+    // Make a POST request to your backend API to create a new category
+    fetch("http://localhost:3000/admin/add-product-category", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.props.token, // Include your authentication token
+      },
+      body: JSON.stringify({ name: categoryName }), // Send the category name
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Handle the response, you can update your state or perform any actions as needed
+        console.log("Category created successfully:", data);
+        // You can add the new category to your state if needed
+        // Update the state to re-render the component with the new category
+        this.setState((prevState) => ({
+          categories: [...prevState.categories, data], // Assuming you have a state property called 'categories'
+        }));
+      })
+      .catch((error) => {
+        console.error("Error creating category:", error);
+        // Handle any error conditions here
+      });
+  };
+
   render() {
     return (
       <div>
@@ -200,24 +253,41 @@ class Products extends Component {
             >
               New product
             </Button>
+            <CategoryForm onSubmit={this.createCategoryHandler} />
           </div>
         )}
-        {this.state.products.map((product) => (
-          <Product
-            isAuthenticated={this.state.isAuth}
-            id={product._id}
-            key={product._id}
-            isVisible={product.isVisible}
-            isFeatured={product.isFeatured}
-            title={product.title}
-            description={product.description}
-            price={product.price}
-            inStock={product.inStock}
-            image={product.image}
-            date={new Date(product.createdAt).toLocaleDateString("en-GB")}
-            onStartEdit={this.onStartEditProductHandler.bind(this, product._id)}
-            onDelete={this.deleteProductHandler.bind(this, product._id)}
-          />
+        {this.state.categories.map((category) => (
+          <div key={category._id}>
+            <h1 id={category._id}>
+              {category.name}
+            </h1>
+            <div>
+              {this.state.products
+                .filter((product) => product.category[0] === category._id)
+                .map((product) => (
+                  <Product
+                    isAuthenticated={this.state.isAuth}
+                    id={product._id}
+                    key={product._id}
+                    isVisible={product.isVisible}
+                    isFeatured={product.isFeatured}
+                    title={product.title}
+                    description={product.description}
+                    price={product.price}
+                    inStock={product.inStock}
+                    image={product.image}
+                    date={new Date(product.createdAt).toLocaleDateString(
+                      "en-GB"
+                    )}
+                    onStartEdit={this.onStartEditProductHandler.bind(
+                      this,
+                      product._id
+                    )}
+                    onDelete={this.deleteProductHandler.bind(this, product._id)}
+                  />
+                ))}
+            </div>
+          </div>
         ))}
       </div>
     );

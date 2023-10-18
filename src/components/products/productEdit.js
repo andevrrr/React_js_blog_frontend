@@ -38,6 +38,11 @@ const PRODUCT_FORM = {
     touched: false,
     // validators: [required, length({ min: 5 })],
   },
+  category: { // New state property for selected category
+    value: "", // Initially empty
+    valid: false,
+    touched: false,
+  },
 };
 
 class ProductEdit extends Component {
@@ -45,7 +50,20 @@ class ProductEdit extends Component {
     productForm: PRODUCT_FORM,
     formIsValid: false,
     imagePreview: null,
+    categories: [],
   };
+
+  componentDidMount() {
+    // Fetch and populate the categories when the component mounts
+    fetch("http://localhost:3000/admin/get-product-category")
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({ categories: data });
+      })
+      .catch((error) => {
+        console.error("Error fetching categories:", error);
+      });
+  }
 
   componentDidUpdate(prevProps, prevState) {
     if (
@@ -79,6 +97,11 @@ class ProductEdit extends Component {
           value: this.props.selectedProduct.inStock,
           valid: true,
         },
+        category: {
+          ...prevState.productForm.category,
+            value: this.props.selectedProduct.category,
+            valid: true,
+        }
       };
       this.setState({ productForm: productForm, formIsValid: true });
     }
@@ -107,6 +130,9 @@ class ProductEdit extends Component {
           value: files ? files[0] : value,
         },
       };
+      if (input === "category") {
+        updatedForm[input].value = value;
+      }
 
       let formIsValid = true;
       for (const inputName in updatedForm) {
@@ -148,6 +174,7 @@ class ProductEdit extends Component {
       price: this.state.productForm.price.value,
       description: this.state.productForm.description.value,
       inStock: this.state.productForm.inStock.value,
+      category: this.state.productForm.category.value,
     };
     this.props.onFinishEdit(product);
     this.setState({
@@ -228,6 +255,23 @@ class ProductEdit extends Component {
               value={this.state.productForm["inStock"].value}
             />
           </form>
+          <div className="form-control">
+              <label htmlFor="category">Category</label>
+              <select
+                id="category"
+                onChange={(event) =>
+                  this.productInputChangeHandler("category", event.target.value)
+                }
+                value={this.state.productForm["category"].value}
+              >
+                <option value="">Select a category</option>
+                {this.state.categories.map((category) => (
+                  <option key={category._id} value={category._id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+            </div>
         </Modal>
       </Fragment>
     ) : null;
