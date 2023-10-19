@@ -1,21 +1,30 @@
-//import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from "react";
+import "./Main.css";
 
+function Main() {
+  const [moveLogo, setMoveLogo] = useState(false);
 
-function App() {
-//   const [posts, setPosts] = useState([]);
+  const handleScroll = () => {
+    if (window.scrollY > 1) {
+      setMoveLogo(true);
+    }
+  };
 
-//   useEffect(() => {
-//     fetch('http://localhost:3000/') // Replace this URL with the actual backend URL
-//       .then(response => response.json())
-//       .then(data => setPosts(data))
-//       .catch(error => console.error('Error fetching posts:', error));
-//   }, []);
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
     <div className="App">
-      <p>Hi, its the main page</p>
+      <div className="animation">
+        <div className={moveLogo ? "move word left" : "word left"}>Bon</div>
+        <div className={moveLogo ? "move word right" : "word right"}>ny</div>
+      </div>
     </div>
   );
 }
 
-export default App;
+export default Main;
