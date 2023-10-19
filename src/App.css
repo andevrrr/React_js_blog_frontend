@@ -2,9 +2,10 @@
   box-sizing: border-box;
 }
 
-main {
-  /* margin-left: 10%;
-  margin-right: 10%; */
+.main {
+  margin-top: 10%;
+  margin-left: 10%;
+  margin-right: 10%;
 }
 
 body {

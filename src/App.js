@@ -163,8 +163,7 @@ class App extends Component {
       routes = (
         <BrowserRouter>
           <Header isAuth={this.state.isAuth} onLogout={this.logoutHandler} />
-          <main>
-          <Routes>
+          <Routes >
             <Route
               path="/admin"
               exact
@@ -200,15 +199,13 @@ class App extends Component {
               element={<SingleProduct token={this.state.token} />}
             />
           </Routes>
-          </main>
         </BrowserRouter>
       );
     } else {
       routes = (
         <BrowserRouter>
           <Header isAuth={this.state.isAuth} />
-          <main>
-          <Routes className="main">
+          <Routes>
           <Route
               path="/"
               exact
@@ -241,59 +238,10 @@ class App extends Component {
             <Route path="/posts/:postId" element={<SinglePost />} />
             <Route path="/products/:productId" element={<SingleProduct />} />
           </Routes>
-          </main>
         </BrowserRouter>
       );
     }
-    return <>{routes}<>The code you've provided should work for showing and hiding the header as the user scrolls. Here's a quick recap of how it works:
-
-    The header starts in the hidden state (transform: translateY(-100%)).
-    
-    The useEffect hook is used to add a scroll event listener to the window. When the user scrolls, the handleScroll function is called.
-    
-    The handleScroll function checks the window.scrollY value (the vertical scroll position). If the scroll position is greater than 10 pixels, it sets the showHeader state to "visible," which will trigger the CSS rule .header.visible that changes the transform property to transform: translateY(0).
-    
-    If the user scrolls back to the top (scroll position is less than or equal to 10 pixels), it hides the header again.
-    
-    The CSS rules define the transition and styling for the header when it's in the "visible" state.
-    
-    The header component uses the showHeader state to determine whether to apply the "visible" class to the header element.
-    
-    This setup should show the header after the user has scrolled down 10 pixels and hide it when they scroll back up. Make sure the Header component is correctly integrated into your application, and the CSS styles are loaded.
-    
-    If you encounter any issues or have further questions, please let me know!The code you've provided should work for showing and hiding the header as the user scrolls. Here's a quick recap of how it works:
-
-The header starts in the hidden state (transform: translateY(-100%)).
-
-The useEffect hook is used to add a scroll event listener to the window. When the user scrolls, the handleScroll function is called.
-
-The handleScroll function checks the window.scrollY value (the vertical scroll position). If the scroll position is greater than 10 pixels, it sets the showHeader state to "visible," which will trigger the CSS rule .header.visible that changes the transform property to transform: translateY(0).
-
-If the user scrolls back to the top (scroll position is less than or equal to 10 pixels), it hides the header again.
-
-The CSS rules define the transition and styling for the header when it's in the "visible" state.
-
-The header component uses the showHeader state to determine whether to apply the "visible" class to the header element.
-
-This setup should show the header after the user has scrolled down 10 pixels and hide it when they scroll back up. Make sure the Header component is correctly integrated into your application, and the CSS styles are loaded.
-
-If you encounter any issues or have further questions, please let me know!The code you've provided should work for showing and hiding the header as the user scrolls. Here's a quick recap of how it works:
-
-The header starts in the hidden state (transform: translateY(-100%)).
-
-The useEffect hook is used to add a scroll event listener to the window. When the user scrolls, the handleScroll function is called.
-
-The handleScroll function checks the window.scrollY value (the vertical scroll position). If the scroll position is greater than 10 pixels, it sets the showHeader state to "visible," which will trigger the CSS rule .header.visible that changes the transform property to transform: translateY(0).
-
-If the user scrolls back to the top (scroll position is less than or equal to 10 pixels), it hides the header again.
-
-The CSS rules define the transition and styling for the header when it's in the "visible" state.
-
-The header component uses the showHeader state to determine whether to apply the "visible" class to the header element.
-
-This setup should show the header after the user has scrolled down 10 pixels and hide it when they scroll back up. Make sure the Header component is correctly integrated into your application, and the CSS styles are loaded.
-
-If you encounter any issues or have further questions, please let me know!</></>;
+    return <>{routes}<>edfrgthjm,</></>;
   }
 }
 

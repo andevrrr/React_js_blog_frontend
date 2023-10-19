@@ -19,7 +19,10 @@ function Main() {
 
   return (
     <div className="App">
-      <div className="animation">
+      <div className={moveLogo ? "welcome-text visible" : "welcome-text"}>
+            Welcome to
+          </div>
+      <div  className={moveLogo ? "move animation" : "animation"}>
         <div className={moveLogo ? "move word left" : "word left"}>Bon</div>
         <div className={moveLogo ? "move word right" : "word right"}>ny</div>
       </div>
