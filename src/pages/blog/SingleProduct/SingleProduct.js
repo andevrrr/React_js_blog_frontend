@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 
 import CommentForm from "../../../components/comments/comments";
 
+import './SingleProduct.css'
+
 const SingleProduct = () => {
   const { productId } = useParams();
 
@@ -112,9 +114,9 @@ const SingleProduct = () => {
   };
 
   return (
-    <section>
+    <section className="sectionSingleProduct">
       <h1>{product.title}</h1>
-      <img
+      <img className="img"
         style={{ width: "200px" }}
         src={`http://localhost:3000/${product.image}`}
         alt=""

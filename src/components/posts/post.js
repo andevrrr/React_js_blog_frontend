@@ -3,8 +3,10 @@ import React from "react";
 import Button from "../button/Button";
 import StatusToggle from "../Status/status";
 
+import './Posts.css'
+
 const Post = (props) => (
-  <article>
+  <article className="articlePost">
     <h2>{props.title}</h2>
     <p>{props.content}</p>
     <div>

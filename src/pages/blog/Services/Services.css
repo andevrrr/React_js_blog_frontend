@@ -1,0 +1,25 @@
+.sectionServices {
+    margin-left: 20%;
+    margin-right: 20%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; 
+}
+
+article {
+    width: 300px;
+    margin-bottom: 20px; 
+}
+
+.categoryName {
+    font-family: 'Cormorant SC', sans-serif;
+}
+
+@media (max-width: 1000px) {
+    section {
+        margin-left: 10%;
+        margin-right: 10%;
+        display: block;
+        max-width: 500px;
+    }
+  }

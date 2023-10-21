@@ -1,0 +1,62 @@
+.sectionSingleProduct {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid black;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: block;
+  }
+  
+  h1 {
+    color: black;
+  }
+  
+  .img {
+    width: 100%;
+    max-width: 300px;
+    margin: 10px 0;
+  }
+  
+  p {
+    color: black;
+    margin-bottom: 10px;
+  }
+  
+  button {
+    background-color: black;
+    color: white;
+    border: 1px solid black;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  button:hover {
+    background-color: white;
+    color: black;
+  }
+  
+  /* Styles for CommentForm (you can customize as needed) */
+  .comment-form {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid black;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  input,
+  textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    border: 1px solid black;
+    border-radius: 5px;
+  }
+  
+  

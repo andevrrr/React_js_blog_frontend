@@ -11,6 +11,12 @@ const SERVICE_FORM = {
     touched: false,
     // validators: [required, length({ min: 5 })],
   },
+  description: {
+    value: "",
+    valid: false,
+    touched: false,
+    // validators: [required, length({ min: 5 })],
+  },
   time: {
     value: "",
     valid: false,
@@ -59,6 +65,11 @@ class ServiceEdit extends Component {
         name: {
           ...prevState.serviceForm.name,
           value: this.props.selectedService.name,
+          valid: true,
+        },
+        description: {
+          ...prevState.serviceForm.description,
+          value: this.props.selectedService.description,
           valid: true,
         },
         time: {
@@ -135,6 +146,7 @@ class ServiceEdit extends Component {
   acceptServiceChangeHandler = () => {
     const service = {
       name: this.state.serviceForm.name.value,
+      description: this.state.serviceForm.description.value,
       time: this.state.serviceForm.time.value,
       price: this.state.serviceForm.price.value,
       category: this.state.serviceForm.category.value,
@@ -167,6 +179,16 @@ class ServiceEdit extends Component {
               valid={this.state.serviceForm["name"].valid}
               touched={this.state.serviceForm["name"].touched}
               value={this.state.serviceForm["name"].value}
+            />
+            <Input
+              id="description"
+              label="Description"
+              control="input"
+              onChange={this.serviceInputChangeHandler}
+              onBlur={this.inputBlurHandler.bind(this, "description")}
+              valid={this.state.serviceForm["description"].valid}
+              touched={this.state.serviceForm["description"].touched}
+              value={this.state.serviceForm["description"].value}
             />
             <Input
               id="time"

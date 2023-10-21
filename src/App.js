@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-import Services from "./pages/Blog/Services";
-import Products from "./pages/Blog/Products";
-import Posts from "./pages/Blog/Posts";
+import Services from "./pages/Blog/Services/Services";
+import Products from "./pages/Blog/Products/Products";
+import Posts from "./pages/Blog/Posts/Posts";
 import Header from "./pages/Blog/Header/Header";
 import Main from "./pages/Blog/Main";
 import SinglePost from "./pages/Blog/SinglePost/SinglePost";
@@ -241,7 +241,7 @@ class App extends Component {
         </BrowserRouter>
       );
     }
-    return <>{routes}<>edfrgthjm,</></>;
+    return <>{routes}</>;
   }
 }
 

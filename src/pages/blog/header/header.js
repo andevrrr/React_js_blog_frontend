@@ -14,11 +14,15 @@ function Header({ path, isAuth, onLogout }) {
   };
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+    if (path === "/") {
+      window.addEventListener("scroll", handleScroll);
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+      };
+    } else {
+      setShowHeader(true);
+    }
+  }, [path]);
 
   const handleLogout = (event) => {
     event.preventDefault();

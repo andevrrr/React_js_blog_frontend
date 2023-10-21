@@ -6,30 +6,29 @@ import "./Products.css";
 import StatusToggle from "../Status/status";
 
 const Product = (props) => (
-  <article>
+  <article className="article">
     <div className="product_item_header">
       <h1>{props.title}</h1>
     </div>
     <div className="post__image">
       <img src={`http://localhost:3000/${props.image}`} alt="Image" />
-      {/* <Image image={props.image} contain /> */}
     </div>
     <div className="product_item_info">
-      <h2>{props.price}$</h2>
+      <h2 className="price">{props.price}$</h2>
       <p>{props.description}</p>
-      {props.inStock ? <p>In stock</p> : <p>Out of stock</p>}
+      {props.inStock ? <p>В наличии</p> : <p>Нет в наличии</p>}
     </div>
-    <div>
-      <Button link={props.id}>View more</Button>
+    <div className="button_div">
+      <Button link={props.id}>о продукте</Button>
       {props.isAuthenticated && (
           <>
-            <Button onClick={props.onStartEdit}>Edit</Button>
-            <Button onClick={props.onDelete}>Delete</Button>
+            <Button onClick={props.onStartEdit}>Редактировать</Button>
+            <Button onClick={props.onDelete}>Удалить</Button>
           </>
         )}
     </div>
     {props.isAuthenticated && (
-      <div>
+      <div className="status">
         <StatusToggle
           model="products"
           field="isVisible"

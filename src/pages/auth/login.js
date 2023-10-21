@@ -90,7 +90,7 @@ class Login extends Component {
             valid={this.state.loginForm['password'].valid}
             touched={this.state.loginForm['password'].touched}
           />
-          <Button design="raised" type="submit" loading={this.props.loading}>
+          <Button type="submit" loading={this.props.loading}>
             Login
           </Button>
         </form>

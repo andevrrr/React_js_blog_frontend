@@ -15,7 +15,7 @@ const button = (props) =>
       disabled={props.disabled || props.loading}
       type={props.type}
     >
-      {props.loading ? "Loading..." : props.children}
+      {props.loading ? "Загрузка..." : props.children}
     </button>
   ) : (
     <Link

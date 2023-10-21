@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 
-import Product from "../../components/Products/Product";
-import ProductEdit from "../../components/Products/ProductEdit";
-import Button from "../../components/button/Button";
-import CategoryForm from "../../components/CategoryForm/CategoryForm";
+import Product from "../../../components/Products/Product";
+import ProductEdit from "../../../components/Products/ProductEdit";
+import Button from "../../../components/button/Button";
+import CategoryForm from "../../../components/CategoryForm/CategoryForm";
+
+import './Products.css';
 
 class Products extends Component {
   state = {
@@ -236,7 +238,7 @@ class Products extends Component {
 
   render() {
     return (
-      <div>
+      <section className="sectionProduct">
         {this.state.isAuth && (
           <div>
             <ProductEdit
@@ -247,8 +249,6 @@ class Products extends Component {
               onFinishEdit={this.finishEditHandler}
             />
             <Button
-              mode="raised"
-              design="accent"
               onClick={this.newProductHandler}
             >
               New product
@@ -289,7 +289,7 @@ class Products extends Component {
             </div>
           </div>
         ))}
-      </div>
+      </section>
     );
   }
 }

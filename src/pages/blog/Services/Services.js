@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 
-import Service from "../../components/Services/Service";
-import ServiceEdit from "../../components/Services/ServiceEdit";
-import Button from "../../components/button/Button";
-import CategoryForm from "../../components/CategoryForm/CategoryForm";
+import Service from "../../../components/Services/Service";
+import ServiceEdit from "../../../components/Services/ServiceEdit";
+import Button from "../../../components/button/Button";
+import CategoryForm from "../../../components/CategoryForm/CategoryForm";
+
+import './Services.css';
 
 class Services extends Component {
   state = {
@@ -120,6 +122,7 @@ class Services extends Component {
     });
     const formData = new FormData();
     formData.append("name", serviceData.name);
+    formData.append("description", serviceData.description);
     formData.append("time", serviceData.time);
     formData.append("price", serviceData.price);
     formData.append("category", serviceData.category);
@@ -232,7 +235,7 @@ class Services extends Component {
 
   render() {
     return (
-      <div>
+      <section className="sectionServices">
         {this.state.isAuth && (
           <div>
             <ServiceEdit
@@ -243,8 +246,6 @@ class Services extends Component {
               onFinishEdit={this.finishEditHandler}
             />
             <Button
-              mode="raised"
-              design="accent"
               onClick={this.newServiceHandler}
             >
               New service
@@ -254,7 +255,7 @@ class Services extends Component {
         )}
         {this.state.categories.map((category) => (
           <div key={category._id}>
-            <h1 id={category._id}>
+            <h1 className="categoryName" id={category._id}>
               {category.name}
             </h1>
             <div>
@@ -268,6 +269,7 @@ class Services extends Component {
                   isVisible={service.isVisible}
                   isFeatured={service.isFeatured}
                   name={service.name}
+                  description={service.description}
                   time={service.time}
                   price={service.price}
                   date={new Date(service.createdAt).toLocaleDateString("en-GB")}
@@ -281,7 +283,7 @@ class Services extends Component {
             </div>
           </div>
         ))}
-      </div>
+      </section>
     );
   }
 }

@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-import Post from "../../components/Posts/Post";
+import Post from "../../../components/Posts/Post";
 //import axios from "axios";
 
-import PostEdit from "../../components/Posts/PostEdit";
-import Button from "../../components/button/Button";
+import PostEdit from "../../../components/Posts/PostEdit";
+import Button from "../../../components/button/Button";
+
+import './Posts.css';
 
 class Posts extends Component {
   state = {
@@ -172,7 +174,7 @@ class Posts extends Component {
 
   render() {
     return (
-      <div>
+      <section className="sectionPost">
         {this.state.isAuth && (
           <div>
             <PostEdit
@@ -182,7 +184,7 @@ class Posts extends Component {
               onCancelEdit={this.cancelEditHandler}
               onFinishEdit={this.finishEditHandler}
             />
-            <Button mode="raised" design="accent" onClick={this.newPostHandler}>
+            <Button  onClick={this.newPostHandler}>
               New post
             </Button>
           </div>
@@ -204,7 +206,7 @@ class Posts extends Component {
             onDelete={this.deletePostHandler.bind(this, post._id)}
           />
         ))}
-      </div>
+      </section>
     );
   }
 }
