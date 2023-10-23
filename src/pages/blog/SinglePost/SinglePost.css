@@ -1,0 +1,23 @@
+.SinglePostSection {
+    display: block;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.createdOn {
+    text-transform: lowercase;
+    font-weight: 500;
+}
+
+.content {
+    text-transform: lowercase;
+}
+
+.comment {
+    display: flex;
+    margin: 10px 0px 10px 0px;
+}
+
+.comment button {
+    margin-left: 15px;
+}

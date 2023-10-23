@@ -71,8 +71,6 @@ function Header({ path, isAuth, onLogout }) {
               Posts
             </Link>
           </li>
-        </ul>
-        <ul className="nav-list">
           {!isAuth ? (
             <>
               <li>
@@ -97,6 +95,9 @@ function Header({ path, isAuth, onLogout }) {
             </li>
           )}
         </ul>
+        {/* <ul className="nav-list">
+
+        </ul> */}
       </div>
     </header>
   );

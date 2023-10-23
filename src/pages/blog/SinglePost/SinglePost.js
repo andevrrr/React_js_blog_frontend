@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 
 import CommentForm from "../../../components/comments/comments";
 
+import './SinglePost.css';
+
 const SinglePost = () => {
   const { postId } = useParams(); // Access the postId parameter
 
@@ -108,14 +110,14 @@ const SinglePost = () => {
   };
 
   return (
-    <section>
+    <section className="SinglePostSection">
       <h1>{post.title}</h1>
-      <h2>Created on {post.date}</h2>
-      <p>{post.content}</p>
+      <p className="createdOn">Created on {post.date}</p>
+      <p className="content">{post.content}</p>
       <h2>Comments:</h2>
       {post.comments && post.comments.length > 0 ? (
         post.comments.map((comment, index) => (
-          <div key={comment._id}>
+          <div className="comment" key={comment._id}>
             <p>
               {index + 1} - {comment.text}
             </p>

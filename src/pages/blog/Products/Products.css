@@ -1,6 +1,9 @@
 .sectionProduct {
     margin-left: 20%;
     margin-right: 20%;
+}
+
+.divProducts {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between; 

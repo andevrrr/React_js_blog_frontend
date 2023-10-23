@@ -253,12 +253,13 @@ class Services extends Component {
             <CategoryForm onSubmit={this.createCategoryHandler} />
           </div>
         )}
+        <div>
         {this.state.categories.map((category) => (
           <div key={category._id}>
             <h1 className="categoryName" id={category._id}>
               {category.name}
             </h1>
-            <div>
+            <div className="divServices">
               {this.state.services
               .filter((service) => service.category[0] === category._id)
               .map((service) => (
@@ -283,6 +284,7 @@ class Services extends Component {
             </div>
           </div>
         ))}
+        </div>
       </section>
     );
   }

@@ -261,7 +261,7 @@ class Products extends Component {
             <h1 id={category._id}>
               {category.name}
             </h1>
-            <div>
+            <div className="divProducts">
               {this.state.products
                 .filter((product) => product.category[0] === category._id)
                 .map((product) => (
