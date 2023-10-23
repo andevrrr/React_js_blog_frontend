@@ -6,34 +6,54 @@ const images = [
   require("../../images/nails_2.jpeg"),
 ];
 
+const imageSets = [
+  [
+    require("../../images/brows.jpg"),
+    require("../../images/logoWall.jpg"),
+    require("../../images/lamp.jpg"),
+  ],
+  [
+    require("../../images/cactus.jpg"),
+    require("../../images/outside.jpg"),
+    require("../../images/table.jpg"),
+  ],
+  [
+    require("../../images/logoBar.jpg"),
+    require("../../images/browsTable.jpg"),
+    require("../../images/outside.jpg"),
+  ],
+];
+
 function Main() {
-  const [moveLogo, setMoveLogo] = useState(false);
-
-  // const handleScroll = () => {
-  //   if (window.scrollY > 1) {
-  //     setMoveLogo(true);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   window.addEventListener("scroll", handleScroll);
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, []);
-
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [currentImageSetIndex, setCurrentImageSetIndex] = useState(0);
+
+  // Track the scroll position
+  const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      // Update the index to switch to the next image
+    const headerInterval = setInterval(() => {
       setCurrentImageIndex((prevIndex) =>
         prevIndex === images.length - 1 ? 0 : prevIndex + 1
       );
-    }, 5000); // Change image every 5 seconds (5000 milliseconds)
+    }, 5000);
+
+    const imageSetInterval = setInterval(() => {
+      setCurrentImageSetIndex((prevIndex) =>
+        prevIndex === imageSets.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 1000); // Change image set every 5 seconds
+
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      clearInterval(interval); // Clear the interval when the component unmounts
+      clearInterval(headerInterval);
+      clearInterval(imageSetInterval);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
@@ -55,8 +75,29 @@ function Main() {
       </div>
 
       <div className="picturesSection">
-
+        <div className="picturesSectionContent">
+          <div className="picturesSectionText">
+            <p className="textBig">Комфорт. качество. сервис.</p>
+            <p className="textSmall">такого город еще не видел</p>
+          </div>
+        </div>
+        <div className="picturesSectionImagies">
+          {imageSets[currentImageSetIndex].map((imgSrc, index) => (
+            <img
+              key={index}
+              src={imgSrc}
+              alt={`Image ${index + 1}`}
+              style={{
+                transform: `translateY(${
+                  index === 1 ? scrollY * 0.3 : -scrollY * 0.3
+                }px)`, // Adjust the factor for the desired effect
+              }}
+            />
+          ))}
+        </div>
       </div>
+
+      <div className="another">{/* Content below the pictures section */}</div>
     </div>
   );
 }
