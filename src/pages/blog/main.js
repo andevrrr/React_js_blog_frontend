@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./Main.css";
 
 const images = [
@@ -31,6 +31,8 @@ function Main() {
   // Track the scroll position
   const [scrollY, setScrollY] = useState(0);
 
+  const picturesSectionTextRef = useRef(null);
+
   useEffect(() => {
     const headerInterval = setInterval(() => {
       setCurrentImageIndex((prevIndex) =>
@@ -48,13 +50,32 @@ function Main() {
       setScrollY(window.scrollY);
     };
 
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Add the 'appear' class to the text when it's in the viewport
+            picturesSectionTextRef.current.classList.add("appear");
+          } else {
+            // Remove the 'appear' class when it's out of the viewport
+            picturesSectionTextRef.current.classList.remove("appear");
+          }
+        });
+      },
+      { threshold: 0.5 } // You can adjust the threshold as needed
+    );
+
+    observer.observe(picturesSectionTextRef.current);
+
     window.addEventListener("scroll", handleScroll);
 
     return () => {
+      observer.disconnect();
       clearInterval(headerInterval);
       clearInterval(imageSetInterval);
       window.removeEventListener("scroll", handleScroll);
     };
+    
   }, []);
 
   return (
@@ -76,7 +97,7 @@ function Main() {
 
       <div className="picturesSection">
         <div className="picturesSectionContent">
-          <div className="picturesSectionText">
+          <div ref={picturesSectionTextRef} className="picturesSectionText">
             <p className="textBig">Комфорт. качество. сервис.</p>
             <p className="textSmall">такого город еще не видел</p>
           </div>

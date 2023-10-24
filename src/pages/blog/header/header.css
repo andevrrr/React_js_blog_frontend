@@ -18,7 +18,7 @@ header {
     margin: 0;
     padding: 0;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
   }
   
   .nav-list li {

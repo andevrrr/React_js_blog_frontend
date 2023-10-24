@@ -6,167 +6,6 @@
   height: 100vh;
 }
 
-.animation {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  margin: 0;
-  overflow: hidden;
-  position: relative;
-}
-
-.word {
-  font-size: 25vw; /* 5% of the viewport width */
-  font-family: 'Cormorant SC', sans-serif;
-  transform: translateX(0);
-  position: absolute;
-}
-
-.left {
-  animation-name: left;
-  animation-duration: 10s;
-  left: 50%;
-  transform: translateX(-80%);
-}
-
-@keyframes left {
-  0% {
-      left: -5vw; /* Adjust as needed */
-  }
-  100% {
-      left: 50%;
-  }
-}
-
-.right {
-  animation-name: right;
-  animation-duration: 10s;
-  left: 50%;
-  transform: translateX(30%);
-}
-
-@keyframes right {
-  0% {
-      left: 100vw; /* 100% of the viewport width */
-  }
-  100% {
-      left: 50%;
-  }
-}
-
-.animation.move {
-  animation-name: changeLocation;
-  animation-duration: 10s;
-  display: flex;
-  min-height: 100px;
-  margin: 0;
-  overflow: hidden;
-  position: relative;
-  left: 0;
-}
-
-@keyframes changeLocation {
-  0% {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
-      overflow: hidden;
-      position: relative;
-  }
-  100% {
-      display: flex;
-      min-height: 100px;
-      margin: 0;
-      overflow: hidden;
-      position: relative;
-      left: 0;
-  }
-}
-
-.left.move {
-  animation-name: leftOnMove;
-  animation-duration: 10s;
-  left: 50px;
-  transform: translateX(0%);
-  font-size: 5vw; /* Adjust as needed */
-  animation-timing-function: ease-in-out;
-}
-
-@keyframes leftOnMove {
-  0% {
-      font-size: 25vw; /* Start font size */
-      left: 50%;
-      transform: translateX(-80%);
-  }
-  100% {
-      left: 50px;
-      font-size: 5vw; /* End font size */
-      transform: translateX(0%);
-  }
-}
-
-.right.move {
-  animation-name: rightOnMove;
-  animation-duration: 10s;
-  left: 118px;
-  transform: translateX(0%);
-  font-size: 5vw;
-  animation-timing-function: ease-in-out;
-}
-
-@keyframes rightOnMove {
-  0% {
-      font-size: 25vw;
-      left: 50%;
-      transform: translateX(30%);
-  }
-  100% {
-      left: 118px;
-      font-size: 5vw;
-      transform: translateX(0%);
-  }
-}
-
-.welcome-text {
-  opacity: 1;
-  animation-name: changeOpacity;
-  animation-duration: 5s;
-  position: absolute;
-  font-family: 'Cormorant SC', sans-serif;
-  top: 50vh; /* Adjust as needed */
-  font-size: 3vw;
-  left: 35%;
-}
-
-@keyframes changeOpacity {
-  0% {
-      opacity: 0;
-  }
-  100% {
-      opacity: 1;
-  }
-}
-
-.welcome-text.visible {
-  opacity: 0;
-  animation-duration: 5s;
-  animation-name: changeOpacityRemove;
-}
-
-@keyframes changeOpacityRemove {
-  0% {
-      opacity: 1;
-  }
-  100% {
-      opacity: 0;
-  }
-}
-
-
-
 /* SlideShow Styling ! ! ! */
 
 .slideshow-container {
@@ -214,6 +53,7 @@
   height: 90vh;
   background-color: rgb(238, 237, 237);
   overflow: hidden;
+  box-shadow: inset 0 15px 10px rgba(0, 0, 0, 0.061), inset 0 -10px 10px rgba(0, 0, 0, 0.061);
 }
 
 .picturesSectionContent {
@@ -228,7 +68,12 @@
   text-align: center;
   margin-top: 5%;
   margin-right: 20%;
-  z-index: 1;
+  opacity: 0; /* Set initial opacity to 0 */
+  transition: opacity 5s; /* Add a 1-second transition to opacity */
+}
+
+.picturesSectionText.appear {
+  opacity: 1; /* When the 'appear' class is added, opacity will transition to 1 */
 }
 
 .picturesSectionText .textBig {
