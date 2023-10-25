@@ -27,7 +27,7 @@ class CategoryForm extends Component {
             onChange={this.handleCategoryNameChange}
           />
         </label>
-        <button type="submit">Create Category</button>
+        <button type="submit">Создать категорию</button>
       </form>
     );
   }

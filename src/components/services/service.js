@@ -18,8 +18,8 @@ const Service = (props) => (
     <div>
       {props.isAuthenticated && (
         <>
-          <Button onClick={props.onStartEdit}>Edit</Button>
-          <Button onClick={props.onDelete}>Delete</Button>
+          <Button onClick={props.onStartEdit}>Редактировать</Button>
+          <Button onClick={props.onDelete}>Удалить</Button>
         </>
       )}
     </div>

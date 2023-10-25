@@ -10,11 +10,11 @@ const Post = (props) => (
     <h2>{props.title}</h2>
     <p>{props.content}</p>
     <div>
-      <Button link={props.id}>View more</Button>
+      <Button link={props.id}>Узнать больше</Button>
       {props.isAuthenticated && (
         <>
-          <Button onClick={props.onStartEdit}>Edit</Button>
-          <Button onClick={props.onDelete}>Delete</Button>
+          <Button onClick={props.onStartEdit}>Редактировать</Button>
+          <Button onClick={props.onDelete}>Удалить</Button>
         </>
       )}
     </div>
