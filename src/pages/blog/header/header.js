@@ -18,16 +18,16 @@ function Header({ path, isAuth, onLogout }) {
     }
   };
 
-  useEffect(() => {
-    if (path === "/") {
-      window.addEventListener("scroll", handleScroll);
-      return () => {
-        window.removeEventListener("scroll", handleScroll);
-      };
-    } else {
-      setShowHeader(true);
-    }
-  }, [path]);
+  // useEffect(() => {
+  //   if (path === "/") {
+  //     window.addEventListener("scroll", handleScroll);
+  //     return () => {
+  //       window.removeEventListener("scroll", handleScroll);
+  //     };
+  //   } else {
+  //     setShowHeader(true);
+  //   }
+  // }, [path]);
 
   const handleLogout = (event) => {
     event.preventDefault();
@@ -41,9 +41,8 @@ function Header({ path, isAuth, onLogout }) {
   };
 
   return (
-    <header className={showHeader ? "visible" : ""}>
+    <header >
       <div className="menu-icon" onClick={toggleMobileMenu}>
-        {/* Three lines for menu icon */}
         <div></div>
         <div></div>
         <div></div>
