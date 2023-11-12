@@ -1,5 +1,7 @@
 /* General Header Styles */
 header {
+  visibility: hidden;
+  position: absolute;
   z-index: 1;
   width: 100%;
   align-content: center;

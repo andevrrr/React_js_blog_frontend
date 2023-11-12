@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import bonnyVideo from '../../images/bonny_video.mp4';
+import bonnyVideo from "../../images/bonny_video.mp4";
 import "./Main.css";
 
 const imageSets = [
@@ -68,11 +68,13 @@ function Main() {
   return (
     <div className="App">
       <div className="header_body">
-
         <video autoPlay loop muted playsInline>
           <source src={bonnyVideo} type="video/mp4" />
         </video>
-        //
+        <div className="centered-text">
+          <p>Bonny Studio</p>
+          <p>Твоя зона комфорта</p>
+        </div>
       </div>
 
       <div className="picturesSection">
