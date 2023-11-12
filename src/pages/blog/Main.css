@@ -57,6 +57,8 @@
 }
 
 .picturesSectionContent {
+  z-index: 1;
+  position: relative;
   height: 100%;
   display: flex;
   flex-direction: column; 
@@ -105,16 +107,22 @@
 .picturesSectionImagies img:nth-child(1) {
   top: 200px;
   left: 100px;
+  z-index: 2;
 }
 
 .picturesSectionImagies img:nth-child(2) {
   top: -200px;
   right: 50px;
+  max-width: 400px;
+  max-height: 480px;
 }
 
 .picturesSectionImagies img:nth-child(3) {
-  bottom: -300px;
+  z-index: 2;
+  bottom: -350px;
   right: 400px;
+  max-width: 340px;
+  max-height: 420px;
 }
 
 /* End */
