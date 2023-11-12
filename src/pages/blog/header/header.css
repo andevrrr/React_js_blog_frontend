@@ -20,7 +20,7 @@ header {
 
 .nav-list li a {
   text-decoration: none;
-  font-family: 'Cormorant Unicase', serif;
+  font-family: "Cormorant Unicase", serif;
   color: rgb(0, 0, 0);
   font-weight: bold;
 }
@@ -45,13 +45,12 @@ header {
 
 /* Mobile Menu */
 
-
 .nav.open {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  background-color: #fff;
+  backdrop-filter: blur(3px);
   height: 100vh;
   transform: translateX(0);
   transition: transform 1s ease-in-out;
@@ -78,11 +77,11 @@ header {
     transform: translateX(-100%);
     transition: transform 1s ease-in-out;
     position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background-color: #fff;
-  height: 100vh;
+    top: 0;
+    left: 0;
+    width: 100%;
+    backdrop-filter: blur(3px);
+    height: 100vh;
   }
 
   .nav-list {
@@ -99,6 +98,6 @@ header {
   }
 
   .nav-list li a {
-    font-size: 3em; 
+    font-size: 3em;
   }
 }

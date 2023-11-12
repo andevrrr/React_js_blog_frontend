@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import bonnyVideo from '../../images/bonny_video.mp4';
 import "./Main.css";
 
 const imageSets = [
@@ -28,7 +29,6 @@ function Main() {
   const picturesSectionTextRef = useRef(null);
 
   useEffect(() => {
-
     const imageSetInterval = setInterval(() => {
       setCurrentImageSetIndex((prevIndex) =>
         prevIndex === imageSets.length - 1 ? 0 : prevIndex + 1
@@ -63,13 +63,16 @@ function Main() {
       clearInterval(imageSetInterval);
       window.removeEventListener("scroll", handleScroll);
     };
-    
   }, []);
 
   return (
     <div className="App">
       <div className="header_body">
-        
+
+        <video autoPlay loop muted playsInline>
+          <source src={bonnyVideo} type="video/mp4" />
+        </video>
+        //
       </div>
 
       <div className="picturesSection">

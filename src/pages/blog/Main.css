@@ -6,6 +6,18 @@
   height: 100vh;
 }
 
+@media (max-width: 768px) {
+  .header_body {
+    height: 100vh;
+    overflow: hidden; 
+  }
+  .header_body video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+  }
+}
+
 /* SlideShow Styling ! ! ! */
 
 .slideshow-container {
