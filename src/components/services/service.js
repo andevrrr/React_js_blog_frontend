@@ -13,7 +13,6 @@ const Service = (props) => (
     </div>
     <div className="description_box">
     <p>{props.description}</p>
-    <p>{props.time}h</p>
     </div>
     <div>
       {props.isAuthenticated && (

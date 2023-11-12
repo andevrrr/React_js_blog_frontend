@@ -1,11 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./Main.css";
 
-const images = [
-  require("../../images/nails_1.jpeg"),
-  require("../../images/nails_2.jpeg"),
-];
-
 const imageSets = [
   [
     require("../../images/brows.jpg"),
@@ -25,7 +20,6 @@ const imageSets = [
 ];
 
 function Main() {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [currentImageSetIndex, setCurrentImageSetIndex] = useState(0);
 
   // Track the scroll position
@@ -34,11 +28,6 @@ function Main() {
   const picturesSectionTextRef = useRef(null);
 
   useEffect(() => {
-    const headerInterval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) =>
-        prevIndex === images.length - 1 ? 0 : prevIndex + 1
-      );
-    }, 5000);
 
     const imageSetInterval = setInterval(() => {
       setCurrentImageSetIndex((prevIndex) =>
@@ -71,7 +60,6 @@ function Main() {
 
     return () => {
       observer.disconnect();
-      clearInterval(headerInterval);
       clearInterval(imageSetInterval);
       window.removeEventListener("scroll", handleScroll);
     };
@@ -81,18 +69,7 @@ function Main() {
   return (
     <div className="App">
       <div className="header_body">
-        <div className="slideshow-container">
-          <div className="slideshow-text">
-            <h2>Bonny Studio</h2>
-            <p>записаться</p>
-          </div>
-          <div className="slideshow">
-            <img
-              src={images[currentImageIndex]}
-              alt={`Slide ${currentImageIndex + 1}`}
-            />
-          </div>
-        </div>
+        
       </div>
 
       <div className="picturesSection">
