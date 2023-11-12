@@ -6,6 +6,11 @@ import { NavLink, useNavigate } from "react-router-dom";
 function Header({ path, isAuth, onLogout }) {
   const navigate = useNavigate();
   const [showHeader, setShowHeader] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
 
   const handleScroll = () => {
     if (window.scrollY > 1) {
@@ -37,7 +42,13 @@ function Header({ path, isAuth, onLogout }) {
 
   return (
     <header className={showHeader ? "visible" : ""}>
-      <div className="nav">
+      <div className="menu-icon" onClick={toggleMobileMenu}>
+        {/* Three lines for menu icon */}
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <div className={`nav ${mobileMenuOpen ? "open" : ""}`}>
         <ul className="nav-list">
           <li>
             <Link
