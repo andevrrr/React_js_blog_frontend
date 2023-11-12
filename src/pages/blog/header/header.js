@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
+import { MenuContext } from '../MenuContext';
 
 function Header({ path, isAuth, onLogout }) {
   const navigate = useNavigate();
@@ -10,8 +11,10 @@ function Header({ path, isAuth, onLogout }) {
   const [showHeader, setShowHeader] = useState(false);
   const [scrollDown, setScrollDown] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { toggleMenuClicked } = useContext(MenuContext);
 
   const toggleMobileMenu = () => {
+    toggleMenuClicked();
     setMobileMenuOpen(!mobileMenuOpen);
   };
 

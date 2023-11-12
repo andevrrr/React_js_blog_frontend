@@ -12,6 +12,8 @@ import SingleProduct from "./pages/Blog/SingleProduct/SingleProduct";
 import SignUp from "./pages/Auth/Signup";
 import Login from "./pages/Auth/Login";
 
+import { MenuProvider } from './pages/Blog/MenuContext';
+
 import "./App.css";
 
 class App extends Component {
@@ -162,6 +164,7 @@ class App extends Component {
     if (this.state.isAuth) {
       routes = (
         <BrowserRouter>
+        <MenuProvider>
           <Header isAuth={this.state.isAuth} onLogout={this.logoutHandler} />
           <Routes >
             <Route
@@ -199,11 +202,13 @@ class App extends Component {
               element={<SingleProduct token={this.state.token} />}
             />
           </Routes>
+          </MenuProvider>
         </BrowserRouter>
       );
     } else {
       routes = (
         <BrowserRouter>
+        <MenuProvider>
           <Header isAuth={this.state.isAuth} />
           <Routes>
           <Route
@@ -238,6 +243,7 @@ class App extends Component {
             <Route path="/posts/:postId" element={<SinglePost />} />
             <Route path="/products/:productId" element={<SingleProduct />} />
           </Routes>
+          </MenuProvider>
         </BrowserRouter>
       );
     }

@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import bonnyVideo from "../../images/bonny_video.mp4";
 import "./Main.css";
+import { MenuContext } from './MenuContext';
 
 const imageSets = [
   [
@@ -22,7 +23,7 @@ const imageSets = [
 
 function Main() {
   const [currentImageSetIndex, setCurrentImageSetIndex] = useState(0);
-
+  const { menuClicked } = useContext(MenuContext);
   // Track the scroll position
   const [scrollY, setScrollY] = useState(0);
 
@@ -71,7 +72,7 @@ function Main() {
         <video autoPlay loop muted playsInline>
           <source src={bonnyVideo} type="video/mp4" />
         </video>
-        <div className="centered-text">
+        <div className={`centered-text ${menuClicked ? 'special-styling' : ''}`}>
           <p>Bonny Studio</p>
           <p>Твоя зона комфорта</p>
         </div>
