@@ -17,10 +17,16 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: #fff; /* Adjust text color as needed */
-  font-size: 2em; /* Adjust font size as needed */
   text-align: center;
-  z-index: 1; /* Ensures text is above the video */
+  z-index: 1; 
+}
+
+.centered-text p:nth-child(1) {
+  font-weight: bold;
+  font-size: 3em;
+}
+.centered-text p:nth-child(2) {
+  font-size: 1.5em;
 }
 
 /* SlideShow Styling ! ! ! */
