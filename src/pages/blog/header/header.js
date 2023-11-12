@@ -2,10 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 
 function Header({ path, isAuth, onLogout }) {
   const navigate = useNavigate();
+  const location = useLocation();
   const [showHeader, setShowHeader] = useState(false);
+  const [scrollDown, setScrollDown] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => {
@@ -14,20 +17,24 @@ function Header({ path, isAuth, onLogout }) {
 
   const handleScroll = () => {
     if (window.scrollY > 1) {
-      setShowHeader(true);
+      setScrollDown(true);
+    } else {
+      setScrollDown(false);
     }
   };
 
-  // useEffect(() => {
-  //   if (path === "/") {
-  //     window.addEventListener("scroll", handleScroll);
-  //     return () => {
-  //       window.removeEventListener("scroll", handleScroll);
-  //     };
-  //   } else {
-  //     setShowHeader(true);
-  //   }
-  // }, [path]);
+  useEffect(() => {
+    if (location.pathname === "/") {
+      setShowHeader(true);
+      window.addEventListener('scroll', handleScroll);
+    } else {
+      setShowHeader(false);
+    }
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [location.pathname]);
 
   const handleLogout = (event) => {
     event.preventDefault();
@@ -41,7 +48,7 @@ function Header({ path, isAuth, onLogout }) {
   };
 
   return (
-    <header >
+    <header className={`${(location.pathname === "/") ? "mainpage" : "normal"} ${showHeader ? "visible" : ""} ${scrollDown ? "colorOnScroll" : ""}`}>
       <div className="menu-icon" onClick={toggleMobileMenu}>
         <div></div>
         <div></div>

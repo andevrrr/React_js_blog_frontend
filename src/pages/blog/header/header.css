@@ -1,10 +1,26 @@
 /* General Header Styles */
-header {
-  visibility: hidden;
-  position: absolute;
+
+header{
+  position: relative;
   z-index: 1;
   width: 100%;
   align-content: center;
+}
+
+header.mainpage {
+  position: absolute;
+  transform: translateY(-100%);
+  transition: transform 10s;
+}
+
+header.visible{
+  transform: translateY(0);
+  position: fixed;
+}
+
+header.colorOnScroll {
+  z-index: 10;
+  background-color: #fff;
 }
 
 /* Navigation List */
